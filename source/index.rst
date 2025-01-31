@@ -10,7 +10,7 @@ Welcome to ECE 5160: Fast Robots's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   lab1.md
+   home.md
 
 
 
