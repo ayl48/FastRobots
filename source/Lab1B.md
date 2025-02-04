@@ -31,13 +31,20 @@ We begin by setting up our computer by completing the following steps.
 
 ### Configurations
 
+
 ## Lab Tasks
 
 ### Task 1: ECHO command
+The ECHO command sends a string value from the computer to the Artemis board. In response, the Artemis board adds a prefix to the string and sends it back to the computer, which then prints it.
 
-Thi
+The case statement for the ECHO command in Arduino is shown below.
+![](images/Lab1/echo_arduino.jpeg)
 
-### Task 2
+The echoed response from the Artemis board in Python is shown below.
+![](images/Lab1/Echo_py.jpeg)
+
+### Task 2: SEND_THREE_FLOATS commands
+The 
 
 ### Task 3
 

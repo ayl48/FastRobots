@@ -34,7 +34,7 @@ This example displays the loudest frequencies detected by the microphone on the 
 
 [![C Note Detection](https://img.youtube.com/vi/ijKaOKxzsBE/0.jpg)](https://youtu.be/ijKaOKxzsBE)
 
-![](images/home/Lab1/C_Detect.jpg)
+![](images/Lab1/C_detect.jpeg)
 
 In this program, the LED lights up when the board detects the frequency of the C note and stays off for all other frequencies. I added a conditional statement in the printLoudest function to compare the detected frequency to C. If they match, the LED pin is set high. Otherwise, it is set low.
 
