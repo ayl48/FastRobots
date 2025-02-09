@@ -3,7 +3,18 @@
 ## Lab Tasks
 
 ### IMU Setup
+Connect the SparkFun 9DOF IMU Breakout to the Artemis nano board using a Qwicc connector.
+![](images/Lab1/IMU_connection.jpeg)
+
+Running the basic example from the SparkFun_ICM-20948 library, the Artemis successfully retrieves readings from the accelerometer, magnetometer, and gyroscope, reflecting changes as I move the IMU.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dr53VXYPOV8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+In the example, AD0_VAL refers to the Address 0 bit that sets the sensor's I2C address. By default, when the ADR jumper is open, AD0_VAL is set to 1, giving the ICM an address of 0x69. When the ADR jumper is closed, AD0 is grounded, setting its value to 0 and changing the ICM's address to 0x68, so AD0_VAL should be updated in the code.
+
+Working off the provided IMU code  make the board blink three times on startup to indicate that the IMU is running.
+
+
 
 ### Accelerometer
 
