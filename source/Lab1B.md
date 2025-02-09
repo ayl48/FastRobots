@@ -1,12 +1,10 @@
 # Lab 1B: Bluetooth
 
-The objective of this lab is to set up Bluetooth communication between my computer and the Artemis board, and to create a framework for exchanging data that can be adapted for future labs.
+The lab objective is to set up Bluetooth communication between my computer and the Artemis board, and to create a framework for data exchange that can be adapted for future labs.
 
 ## Prelab
 
 ### Computer Setup
-I followed the steps below to set up my computer.
-
 1. Install Python 3 and pip.
 
 2. Install a virtual environment by running the following commands in Terminal or any available command line interface (CLI). Run the second command in the desired project directory.
@@ -28,7 +26,7 @@ I followed the steps below to set up my computer.
  5. After installation, start Jupyter Lab by running jupyter lab in the CLI while the virtual environment is activated.
 
 ### Code Base
-This codebase enables Bluetooth Low Energy (BLE) communication between an Arduino-based Artemis board and a Python program on a computer. A Jupyter notebook on the computer sends commands and interacts with the board over BLE. The ble_arduino.ino file runs on the board, receiving and processing commands from Python.
+This codebase enables Bluetooth Low Energy (BLE) communication between an Arduino-based Artemis board and a Python program on a computer. A Jupyter notebook on the computer sends commands and interacts with the board over BLE. The ble_arduino.ino file runs on the board, receiving and executing commands.
 
 ### Board Setup
 Burn ble_arduino.ino onto the Artemis and set the serial monitor baud rate to 115200 bps to find its MAC address.
@@ -36,7 +34,7 @@ Burn ble_arduino.ino onto the Artemis and set the serial monitor baud rate to 11
 ![](images/Lab1/Artemis_address.png)
 
 ### Configurations
-In connections.yaml, I added my Artemis MAC address and the new UUID generated in Python shown below.
+In connections.yaml, add the Artemis MAC address and a new UUID generated in Python.
 
 ![](images/Lab1/UUID_gen.png)
 
@@ -44,27 +42,26 @@ Add the UUID in ble_arduino.ino as well.
 
 ![](images/Lab1/service_uuid.png)
 
-Each time, I want to create a new command, add it to cmd_types.py and enum Command Types in Arduino, making sure they match.
+To create a new command, add it to cmd_types.py and enum Command Types in Arduino, making sure they match.
 
 ## Lab Tasks
 
 ### ECHO Command
 The ECHO command sends a String from the computer to the Artemis board. In response, the board augments the String and sends it back to the computer, which then prints it.
 
-The case statement for the ECHO in Arduino is shown below.
+Case statement Arduino:
 ![](images/Lab1/echo_arduino.jpeg)
 
-The echoed response sent from the Artemis board to Python is shown below.
+Echoed response from the Artemis board to Python:
 ![](images/Lab1/Echo_py.jpeg)
 
 ### SEND_THREE_FLOATS Command
-This command sends three float values to the Artemis board, but does not expect a response. The goal was to extract these values in Arduino so that they may be used later.
+This command sends three float values to the Artemis board, but does not expect a response. The goal is to extract these values in Arduino so they may be used later.
 
-Here is the command being sent in Python.
+Command sent in Python:
 ![](images/Lab1/3FloatsPy.jpeg)
 
-Here is the case statement for this command in Arduino.
-
+Case statement in Arduino:
 ![](images/Lab1/3FloatsArd.jpeg)
 
 The float values were printed in the serial monitor to verify they were successfully extracted.
@@ -85,11 +82,11 @@ When the notify mechanism in BLE is enabled, the Artemis board automatically sen
 ![](images/Lab1/task4_py.jpeg)
 
 ### Live Time Data
-I wrote a loop in Arduino to send the time 100 times, with each timestamp providing 1 byte of data, to measure the data transfer rate. In my notification handler, I stored the timestamps in an array and logged the values in real-time for reference. To calculate the data rate, I used the first and last timestamp to determine the total time taken to transmit 100 bytes of data.
+I wrote an Arduino loop to send 100 four-byte timestamps to measure the data transfer rate. In my notification handler, I stored the timestamps in an array and logged values in real-time for reference. To calculate the data rate, I used the first and last timestamp to determine the total transmission time.
 
 ![](images/Lab1/GET_TIME.png)
 
-The data rate for this live transmission method is shown below.
+Calculated data rate:
 ![](images/Lab1/data_rate_get.png)
 
 ### SEND_TIME_DATA Command
@@ -102,7 +99,7 @@ The data rate for this batch transmission method is shown below.
 ![](images/Lab1/second_method_rate.png)
 
 ### GET_TEMP_READINGS Command
-In Arduino, I defined a second global array to store temperature readings. Each element in the timestamp array will store the time corresponding to its respective temperature reading in the temperature array. In the GET_TEMP_READINGS case statement, I followed the same framework as the SEND_TIME_DATA command. The first loop populates the arrays, while the second loop concurrently iterates through both arrays, sending the corresponding timestamps and temperature readings together to Python.
+In Arduino, I defined a second global array to store temperature readings. Each element in the timestamp array will store the time corresponding to its respective temperature reading in the temperature array. In the case statement, I followed the same framework as the SEND_TIME_DATA command. The first loop populates the arrays, while the second concurrently iterates through both arrays, sending corresponding timestamps and temperature readings together to Python.
 
 ![](images/Lab1/get_temp_data.jpeg)
 
