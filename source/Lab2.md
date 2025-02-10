@@ -4,7 +4,7 @@
 
 ### IMU Setup
 Connect the SparkFun 9DOF IMU Breakout to the Artemis nano board using a Qwicc connector.
-![](images/Lab1/IMU_connection.jpeg)
+![](images/Lab2/IMU_connection.jpeg)
 
 Running the basic example from the SparkFun_ICM-20948 library, the Artemis successfully retrieves readings from the accelerometer, magnetometer, and gyroscope, reflecting changes as I move the IMU.
 
@@ -14,15 +14,30 @@ In the example, AD0_VAL refers to the Address 0 bit that sets the sensor's I2C a
 
 Working off provided IMU code, I make the board blink three times on startup to indicate that the IMU is running.
 
-![](images/Lab1/blink_imu.PNG)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nsbZK_xvh08" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
 ### Accelerometer
 
+#### Roll and Pitch Outputs
+The pitch and roll outputs of the accelerometer at {-90, 0, 90} are shown.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T1_F63LQtd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+The accelerometer is accurate within a few degrees. I used a box and table to position the IMU, but filming and holding it in place was challenging. Despite this, the output was fairly accurate, so a two-point calibration wasn't necessary. However, I tried it for experience, using {0, 0, 0} as the other reference point.
+
+#### Frequency Spectrum
+
+
+
 ### Gyroscope
 
+
+
 ### Sample Data
+
+
 
 ### RC Car Stunt
 I experimented with the RC car to understand its movement. It tends to skid or slide when stopping and sometimes jerks forward. It also skids when moving forward before turning. Its tight turns are almost 90 degrees.

@@ -9,39 +9,39 @@ Install the latest version of the Arduino IDE and Sparkfun Apollo3 Board’s man
 Connect the Artemis board to the computer via USB. Run the examples below.
 
 ## Blinky
-
 Blinky switches the onboard LED on and off.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RchQiCqFExs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## Serial
 
+## Serial
 The Serial example tests and verifies serial communication between the board and my computer, which is crucial for debugging as it enables me to monitor the board's activity.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tWMFqiiCRKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## Temperature Readings With Analog Read
 
+## Temperature Readings With Analog Read
 This example displays temperature readings from the onboard sensor on the serial monitor. When I apply heat, the temperature readings rise, indicating that the sensor and the analog read function are working.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GKDLq3xk5Nc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## Microphone Output
 
+## Microphone Output
 This example displays the loudest frequencies detected by the microphone on the serial monitor. When I make a noise, the frequency changes printed on the serial monitor are obvious.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cozdqSBalRU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## C Note Detection With LED Indication
 
+## C Note Detection With LED Indication
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ijKaOKxzsBE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 In this program, the LED lights up when the board detects the frequency of the C note and stays off for all other frequencies. I used a conditional statement in the printLoudest function for its implementation.
 ![](images/Lab1/C_detect.jpeg)
+
 
 ## Discussion
 
