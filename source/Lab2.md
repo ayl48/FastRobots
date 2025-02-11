@@ -97,14 +97,18 @@ Complimentary Filter Equation:
 
 I determined the optimal alpha value through trial and error. The ideal alpha value will vary for each sensor, as differences in manufacturing can affect sensor characteristics.
 
-
+![Complimentary Filter Plot](images/Lab2/complementary_plot.jpeg)
 
 ## Sampling Data
+
+To sample data quickly and continuously, I can do the following in the main loop.
+![Complimentary Filter Equation](images/Lab2/main_loop.jpeg)
 
 It’s better to use separate arrays for accelerometer and gyroscope data, as it simplifies processing and parsing, especially when transmitting data. Floats are ideal for sensor readings due to their precision and smaller memory usage compared to doubles, while ints work well for non-decimal data like timestamps. Given the 384KB memory on the Artemis, you can store up to 96,000 samples or about 16 minutes of data at a 100Hz sampling rate, assuming no other significant memory usage. This setup ensures efficient storage and easy data handling.
 
 The video and the screenshot of the timestamps below demonstrate that my Artemis board can capture at least five seconds worth of data and send it over Bluetooth to my computer.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jgirFWsy7Y" frameborder="0" allowfullscreen></iframe>
 
 ## RC Car Stunt
 I experimented with the RC car to understand its movement. It tends to skid or slide when stopping and sometimes jerks forward. It also skids when moving forward before turning. Its tight turns are almost 90 degrees.
