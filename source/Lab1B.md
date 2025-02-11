@@ -125,3 +125,6 @@ Sending data at a higher rate does not result in data loss. I sent large arrays 
 ## Discussion
 
 In this lab, I gained an understanding of BLE and how to utilize BLE Arduino libraries for its implementation. I initially struggled with understanding the notification handler's purpose, but realized it is useful for large datasets, eliminating the need for repeated commands to receive data points.
+
+### References
+I referred to Daria, Yiqi, and Nila's pages for guidance on organizing my page content.

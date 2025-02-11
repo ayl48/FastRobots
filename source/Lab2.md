@@ -1,8 +1,6 @@
 # Lab 2: IMU
 
-## Lab Tasks
-
-### IMU Setup
+## IMU Setup
 Connect the SparkFun 9DOF IMU Breakout to the Artemis nano board using a Qwicc connector.
 ![](images/Lab2/IMU_connection.jpeg)
 
@@ -17,29 +15,98 @@ Working off provided IMU code, I make the board blink three times on startup to 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nsbZK_xvh08" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+## Accelerometer
 
-### Accelerometer
-
-#### Roll and Pitch Outputs
+### Roll and Pitch Outputs
 The pitch and roll outputs of the accelerometer at {-90, 0, 90} are shown.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/T1_F63LQtd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-The accelerometer is accurate within a few degrees. I used a box and table to position the IMU, but filming and holding it in place was challenging. Despite this, the output was fairly accurate, so a two-point calibration wasn't necessary. However, I tried it for experience, using {0, 0, 0} as the other reference point.
+Here are the pitch and roll outputs when the accelerometer is flat on the table.
+![Accelerometer flat](images/Lab2/accel_data.jpeg)  
 
-#### Frequency Spectrum
+The accelerometer is accurate within a few degrees. I used a box and table to position the IMU, but filming and holding it in place was challenging. Nevertheless, the output was accurate within a few degrees, so a two-point calibration wasn't necessary. However, I tried it for experience, using {0, 0, 0} as the other reference point.
+
+To analyze the motion characteristics, I collected roll and pitch values from the accelerometer. I used the equations below to calculate them from the accelerometer's readings along its three axes.
+
+![Roll and Pitch Equations](images/Lab2/a_equations.jpeg)
+
+Since the accelerometer is susceptible to noise, I analyzed the roll and pitch noise in both the time and frequency domains. To examine its frequency spectrum, I applied a Fourier transform to the time-domain data using the code below.
+
+![FFT Code](images/Lab2/FFT_code.jpeg)
+
+### Still IMU Roll and Pitch Data
+I placed the IMU flat on the table to collect the following noise data. Looking at the graphs below, a cut off frequency around 12-15 Hz is reasonable.
+
+![Pitch Time](images/Lab2/pitcha_time_still.jpeg)
+![Pitch Freq](images/Lab2/pitcha_freq_still.jpeg)
+
+
+![Roll Time](images/Lab2/rolla_time_still.jpeg)
+![Roll Freq](images/Lab2/rolla_freq_still.jpeg)
+
+#### Noisy IMU Roll and Pitch
+I placed the IMU on a notepad and gently bounced it on the table to collect the following data.
+
+#### Pitch Data
+![Pitch Time](images/Lab2/pitcha_time_noise.jpeg)
+![Pitch Freq](images/Lab2/pitcha_freq_noise.jpeg)
+
+### Roll Data
+![Roll Time](images/Lab2/rolla_time_noise.jpeg)
+![Roll Freq](images/Lab2/rolla_freq_noise.jpeg)
+
+### Effect of Lowpass Filter
+To filter the data, I used a low pass filter and implemented with the equations shown. The lowpass filter was extremely effective.
+![LPF](images/Lab2/LPF.jpeg)
+
+#### Still IMU
+
+![Roll Time](images/Lab2/rolla_timeoverlay_still.jpeg)
+![Roll Freq](images/Lab2/rolla_freqoverlay_still.jpeg)
 
 
 
-### Gyroscope
+![Pitch Time](images/Lab2/pitcha_timeoverlay_still.jpeg)
+![Pitch Freq](images/Lab2/pitcha_freqoverlay_still.jpeg)
+
+#### Noisy IMU
+
+![Roll Time](images/Lab2/rolla_timeoverlay_noise.jpeg)
+![Roll Freq](images/Lab2/rolla_freqoverlay_noise.jpeg)
+
+
+![Pitch Time](images/Lab2/pitcha_timeoverlay_noise.jpeg)
+![Pitch Freq](images/Lab2/pitcha_freqoverlay_noise.jpeg)
+
+## Gyroscope
+Using the following equations, I can calculate roll, pitch, and yaw from the gyroscope.
+
+![Gyro Basic](images/Lab2/gyro_raw_code.jpeg)
+
+Below are the data outputs from the gyroscope as it moves.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jgirFcWsy7Y" frameborder="0" allowfullscreen></iframe>
+
+The gyroscope data appears to be less noisy than the accelerometer data and shows a consistent offset across all values. While the data may not be entirely accurate, it remains stable, making it more suitable for detecting changes over time. It remains susceptible to drift, which can cause gradual and cumulative inaccuracies unless corrected.
+
+Since gyroscopes are stable for short-term rotations but prone to drift, they can be paired with accelerometers that provide long-term stability but are affected by noise, so a complementary filter combines both for accurate and stable orientation tracking.
+
+Complimentary Filter Equation:
+$$ \theta = (\theta + \theta_g)(1 - \alpha) + \theta_a \alpha $$
 
 
 
-### Sample Data
+Demonstrate the accuracy and range of the complementary filter, and discuss any design choices
 
 
 
-### RC Car Stunt
+## Sampling Data
+
+Storing data in
+
+
+## RC Car Stunt
 I experimented with the RC car to understand its movement. It tends to skid or slide when stopping and sometimes jerks forward. It also skids when moving forward before turning. Its tight turns are almost 90 degrees.
 
 2D movements (e.g. forward, backwards, turns, spins):
