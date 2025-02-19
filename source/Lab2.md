@@ -90,6 +90,9 @@ Below are the data outputs from the gyroscope as it moves.
 
 The gyroscope data appears to be less noisy than the accelerometer data and shows a consistent offset across all values. While the data may not be entirely accurate, it remains stable, making it more suitable for detecting changes over time. It remains susceptible to drift, which can cause gradual and cumulative inaccuracies unless corrected.
 
+![Roll Comparison](images/Lab2/roll_comparison.jpeg)
+![Pitch Comparison](images/Lab2/pitch_comparison.jpeg)
+
 Since gyroscopes are stable for short-term rotations but prone to drift, they can be paired with accelerometers that provide long-term stability but are affected by noise, so a complementary filter combines both for accurate and stable orientation tracking.
 
 Complimentary Filter Equation:
@@ -101,12 +104,17 @@ I determined the optimal alpha value through trial and error. The ideal alpha va
 
 ![Complimentary Filter Plot](images/Lab2/complementary_plot.jpeg)
 
+![Gyro Plot Overlay](images/Lab2/gyro_overlaid_plot.jpeg)
+
 ## Sampling Data
 
 To sample data quickly and continuously, I can do the following in the main loop.
 ![Complimentary Filter Equation](images/Lab2/main_loop.jpeg)
 
-It’s better to use separate arrays for accelerometer and gyroscope data, as it simplifies processing and parsing, especially when transmitting data. Floats are ideal for sensor readings due to their precision and smaller memory usage compared to doubles, while ints work well for non-decimal data like timestamps. Given the 384KB memory on the Artemis, you can store up to 96,000 samples or about 16 minutes of data at a 100Hz sampling rate, assuming no other significant memory usage. This setup ensures efficient storage and easy data handling.
+It is better to use separate arrays for accelerometer and gyroscope data, as it simplifies processing and parsing, especially when transmitting data. Floats are ideal for sensor readings due to their precision and smaller memory usage compared to doubles, while ints work well for non-decimal data like timestamps. Given the 384KB memory on the Artemis, you can store up to 96,000 samples or about 16 minutes of data at a 100Hz sampling rate, assuming no other significant memory usage. This setup ensures efficient storage and easy data handling.
+
+### IMU Data Array
+
 
 The video and the screenshot of the timestamps below demonstrate that my Artemis board can capture more than five seconds worth of data and send it over Bluetooth to my computer.
 
