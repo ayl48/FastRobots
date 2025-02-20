@@ -14,6 +14,7 @@ ECE 5160: Fast Robots
    Lab1A.md
    Lab1B.md
    Lab2.md
+   Lab3.md
 
 Indices and tables
 ==================
