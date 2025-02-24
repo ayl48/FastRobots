@@ -16,7 +16,7 @@ Setup function:
 ### Sensor Placement
 I will mount one sensor on the front and another at a right angle on the side to expand the field of view, enhance depth perception, and improve multi-directional object detection.
 
-![](images/Lab3/sensor_placement.jpg)
+![](images/Lab3/sensor_placement.jpeg)
 
 ### Wiring Diagram
 ![](images/Lab3/ToFLab3Schematic.jpg)
@@ -33,24 +33,34 @@ The scanned address in the serial monitor does not match the datasheet because i
 ### Sensor Data for Selected Distance Mode
 I opted for the short-distance mode for the ToF sensors due because of its resolution at shorter distances and sufficient 1.3m range for the robot's navigation. It is also more immune to ambient light interference. In contrast, the long-distance mode can measure up to 4m but showed reduced accuracy under the bright lab lights during testing.
 
-![](images/Lab3/sensor_distance_mode.jpg)
+![](images/Lab3/sensor_accuracy.jpeg)
+![](images/Lab3/sensor_precision.jpeg)
 
 ### Two ToF Sensors and IMU Working in Parallel
 
-## Two ToF Sensors
+### ToF Sensor Speed
 
 
 ### Time Vs. Distance
+I tried plotting time vs distance at two distances 50cm and 150cm (over the max range for short distance mode).
+
+![](images/Lab3/time_distance_close.jpeg)
+
+![](images/Lab3/time_distance_far.jpeg)
 
 ### Time Vs. Angle
 
-### Discussion
-##Infrared transmission based sensors
+### Infrared Transmission Based Sensor Discussion
 
-## Sensitivity to Colors and Textures
-The sensors are sensitive to colors and textures. It worked best with smooth white surface as all the infrared light reflected back.
+In addition to time-of-flight sensors, IR proximity sensors are also infrared transmission based sensors. IR proximity sensors
 
-When experimenting with colors and textures, I tried measuring distances with a black sheet of paper, my beige fleece sweater, and a white piece of cardboard. 
+### Sensitivity to Colors and Textures
+I tried experimenting with the following colors and textures: a black sheet of paper, my beige fleece sweater, and a white piece of cardboard.
+
+![](images/Lab3/color_plot.jpeg)
+
+It makes sense that measuring distance against the white cardboard would yield the most accurate result out of the three, because white can reflect the most light whereas black would absorb it. The inconsistent surface texture of fleece can create inconsistent reflections. Beige is also not as reflective as white.
 
 # References
 I referenced Wenyi's and Nila's pages for help with formatting content.
+Source for sensor discussion:[Infrared Proximity Sensors](https://www.electricity-magnetism.org/infrared-proximity-sensor/)
