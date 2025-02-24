@@ -46,7 +46,11 @@ I opted for the short-distance mode for the ToF sensors due because of its resol
 
 ### Discussion
 ##Infrared transmission based sensors
+
 ## Sensitivity to Colors and Textures
+The sensors are sensitive to colors and textures. It worked best with smooth white surface as all the infrared light reflected back.
+
+When experimenting with colors and textures, I tried measuring distances with a black sheet of paper, my beige fleece sweater, and a white piece of cardboard. 
 
 # References
 I referenced Wenyi's and Nila's pages for help with formatting content.
