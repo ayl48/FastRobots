@@ -42,35 +42,37 @@ I opted for the short-distance mode for the ToF sensors due because of its resol
 
 ![](images/Lab3/ranging_times.jpeg)
 
-### Two ToF Sensors and IMU Working in Parallel
-
-
 ### ToF Sensor Speed
+The code below outputs the Artemis clock to the Serial monitor and updates the ToF sensor data only when new data is available. Each loop iteration took 6 or 7 ms which is very fast. I expected some iterations to lack data, leading to a time difference between printing the timestamp alone and printing it with the data. I would assume the limiting factor would be due to the sensor measurements because the datasheet says they sample at 50Hz.
 
 ![](images/Lab3/speed_code.jpeg)
 
 ![](images/Lab3/speed_outputs.jpeg)
 
-### Time Vs. Distance
-I tried plotting time vs distance at two distances 50cm and 150cm (over the max range for short distance mode).
+### Two ToF Sensors and IMU Working in Parallel
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PlbhDfo0RSo" frameborder="0" allowfullscreen></iframe>
 
-![](images/Lab3/time_distance_close.jpeg)
+![](images/Lab3/parallel_data.jpeg)
 
-![](images/Lab3/time_distance_far.jpeg)
+#### Time Vs. Distance
+![](images/Lab3/time_distance.jpeg)
 
-### Time Vs. Angle
+#### Time Vs. Angle
+The IMU was kept still.
+
+![](images/Lab3/time_angle.jpeg)
 
 ### Infrared Transmission Based Sensor Discussion
 
 In addition to time-of-flight sensors, LiDAR and IR proximity sensors also rely on infrared transmission. LiDAR uses IR lasers to send pulses and measure return time. It is long range (meters to kilometers) and very precise and accurate, but more expensive and power-intensive. ToF sensors use IR LEDs or lasers and measure the time delay of reflected light which is suitable for medium ranges (centimeters to meters). They offer moderate accuracy and lower resolution than LiDAR, typically performing best at the centimeter scale. IR proximity sensors use IR LEDs to measure the reflected IR intensity. This is more suitable for short-range applications (a few centimeters to a meter) and cost-effective presence detection. They are not ideal for distance measurements because the reflected intensity varies with material properties.
 
 ### Sensitivity to Colors and Textures
-I tried experimenting with the following colors and textures: a black sheet of paper, my beige fleece sweater, and a white piece of cardboard.
+I tested the ToF sensor's sensitivity to colors and textures by measuring distances at a fixed point with various materials.
 
 ![](images/Lab3/color_plot.jpeg)
 
-It makes sense that measuring distance against the white cardboard would yield the most accurate result out of the three, because white can reflect the most light whereas black would absorb it. The inconsistent surface texture of fleece can create inconsistent reflections. Beige is also not as reflective as white.
+I anticipated that the distance measured with the white cardboard would produce the most accurate result, but it appears that the reflectivity of the green plastic was better despite its color. It's worth noting that the texture of the cardboard might also absorb some light, counteracting the reflective qualities of white. As expected, the black leather provided the least accurate measurement because its color is light-absorbing. I was surprised that fleece, with its inconsistent surface texture that can create variable reflections, performed second best.
 
 # References
-I referenced Wenyi's and Nila's pages for help with formatting content.
-Sources for sensor discussion:[Link1](https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors), [Link2](https://pmt-fl.com/time-of-flight-sensor-vs-lidar-what-are-the-differences/), [Link3](https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors/), [Link4](https://www.sony-semicon.com/en/technology/industry/tof.html#:~:text=ToF%20depth%20sensors%20measure%20the,time%20elapsed%20between%20the%20two.)
+I referenced Wenyi's and Nila's pages for formatting content.
+Sensor comparison sources:[Link1](https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors), [Link2](https://pmt-fl.com/time-of-flight-sensor-vs-lidar-what-are-the-differences/), [Link3](https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors/), [Link4](https://www.sony-semicon.com/en/technology/industrytof.html#:~:text=ToF%20depth%20sensors%20measure%20the,time%20elapsed%20between%20the%20two.)
