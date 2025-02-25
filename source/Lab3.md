@@ -34,14 +34,15 @@ The scanned address in the serial monitor does not match the datasheet because i
 ### Sensor Data for Selected Distance Mode
 I opted for the short-distance mode for the ToF sensors due because of its resolution at shorter distances and sufficient 1.3m range for the robot's navigation. It is also more immune to ambient light interference. In contrast, the long-distance mode can measure up to 4m but showed reduced accuracy under the bright lab lights during testing.
 
-As shown in the graph below, the sensor is pretty accurate and precise. For distances that are within a few centimeters, the ToF sensor is significantly less precise. It's also less accurate as well. The ToF sensor works best at distances around half a meter. Once, we get to the edge of its range, its accuracy decreases again. 
+As demonstrated in the graph below, the sensor exhibits high accuracy and precision overall. However, for distances within a few centimeters, the ToF sensor shows the lowest precision and repeatability, as well as reduced accuracy. The sensor performs best in terms of accuracy and precision at distances around half a meter, where the measurements are also the most repeatable. As we approach the limits of its range, its accuracy decreases once more.
+
 ![](images/Lab3/sensor_accuracy.jpeg)
 
 
 ![](images/Lab3/sensor_precision.jpeg)
 
-
-![](images/Lab3/ranging_times.jpeg)
+I thought that accuracy and variation would be improved as ranging time increased. However, in my results, I got the best measurement at 50ms. 
+![](images/Lab3/ranging_time.jpeg)
 
 ### ToF Sensor Speed
 The code below outputs the Artemis clock to the Serial monitor and updates the ToF sensor data only when new data is available. Each loop iteration took 6 or 7 ms which is very fast. I expected some iterations to lack data, leading to a time difference between printing the timestamp alone and printing it with the data. I would assume the limiting factor would be due to the sensor measurements because the datasheet says they sample at 50Hz.
@@ -75,5 +76,5 @@ I tested the ToF sensor's sensitivity to colors and textures by measuring distan
 I anticipated that the distance measured with the white cardboard would produce the most accurate result, but it appears that the reflectivity of the green plastic was better despite its color. It's worth noting that the texture of the cardboard might also absorb some light, counteracting the reflective qualities of white. As expected, the black leather provided the least accurate measurement because its color is light-absorbing. I was surprised that fleece, with its inconsistent surface texture that can create variable reflections, performed second best.
 
 ### References
-I referenced Wenyi's and Nila's pages for formatting content.
+I referenced Wenyi's and Nila's pages for formatting content. I also discussed ideas with Becky.
 Sensor comparison sources:[Link1](https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors), [Link2](https://pmt-fl.com/time-of-flight-sensor-vs-lidar-what-are-the-differences/), [Link3](https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors/), [Link4](https://www.sony-semicon.com/en/technology/industrytof.html#:~:text=ToF%20depth%20sensors%20measure%20the,time%20elapsed%20between%20the%20two.)
