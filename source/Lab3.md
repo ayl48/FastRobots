@@ -1,4 +1,4 @@
-# Lab 3: Time of Flight (ToF) Sensors
+# Lab 3: Time of Flight Sensors
 
 ## Prelab
 
@@ -41,7 +41,7 @@ As demonstrated in the graph below, the sensor exhibits high accuracy and precis
 
 ![](images/Lab3/sensor_precision.jpeg)
 
-I thought that accuracy and variation would be improved as ranging time increased. However, in my results, I got the best measurement at 50ms. 
+I thought that accuracy and variation would be improved as ranging time increased. However, in my results, I got the best measurement at 50ms.
 ![](images/Lab3/ranging_time.jpeg)
 
 ### ToF Sensor Speed
