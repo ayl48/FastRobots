@@ -32,13 +32,12 @@ The output signal has a 3.7V amplitude, matching the power supply. This was cons
 ![](images/Lab4/wheels_code_snippet1.jpg)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gqHCjJhukT0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
-
+<br>
 ![](images/Lab4/wheels_code_snippet2.jpg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sWNrK5JfFV4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
+<br>
 
 ### All Wheels Spinning
 After confirming my motor drivers worked with the power supply, I switched to battery power and verified that all wheels spun properly.
@@ -46,8 +45,7 @@ After confirming my motor drivers worked with the power supply, I switched to ba
 ![](images/Lab4/all_wheels_code.jpg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O3TMd0nXmHE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
+<br>
 
 ### Secured Car Components
 I secured the components into the car as shown.
