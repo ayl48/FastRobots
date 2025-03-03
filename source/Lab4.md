@@ -20,6 +20,7 @@ The motor driver circuit's operating voltage is 2.7-10.8VDC according to the [da
 I used analogWrite commands to generate PWM signals on the motor driver inputs and scoped the outputs.
 
 ![](images/Lab4/pwm_code.jpg)
+---
 ![](images/Lab4/full_setup.jpg)
 ![](images/Lab4/connections.jpg)
 
@@ -32,12 +33,13 @@ The output signal has a 3.7V amplitude, matching the power supply. This was cons
 ![](images/Lab4/wheels_code_snippet1.jpg)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gqHCjJhukT0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<br>
+---
+
 ![](images/Lab4/wheels_code_snippet2.jpg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sWNrK5JfFV4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<br>
+---
 
 ### All Wheels Spinning
 After confirming my motor drivers worked with the power supply, I switched to battery power and verified that all wheels spun properly.
@@ -45,7 +47,8 @@ After confirming my motor drivers worked with the power supply, I switched to ba
 ![](images/Lab4/all_wheels_code.jpg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O3TMd0nXmHE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<br>
+
+---
 
 ### Secured Car Components
 I secured the components into the car as shown.
@@ -60,17 +63,32 @@ I used duct tape to create straps that further secured the components by pressin
 ![](images/Lab4/battery_tape.jpg)
 
 
-
 ### Lower Limit PWM Value to Start Forward Movement
+I started out by creating functions for my motors to determine forward movement.
+
+The lower limit PWM value to move the car from rest is 40.
+
+The lower limit value to turn the car from rest is 100. vid blinks from 100.
 
 
-### Calibration
+### Calibration For Straight Line Movement
+Since the right motor is more powerful and has less internal friction than the left, I edited my motor functions to apply a 1.52 calibration factor to the left side to ensure straight movement. This factor was determined experimentally.
 
-### Open Loop control
+### Open Loop Control Sequence
+After verifying that my robot was able to move in a straight line, I programmed an open loop control sequence that includes some turns.
+
+
 
 ### Frequency Discussion for analogWrite
+Using the code below, I was able to calculate the frequency at which analogWrite is able to write to the motors. The frequency is ___ Hz which is adequately fast for the motors.
+Is this adequately fast for the motors
 
 ### Lower Limit PWM Value for Motion Maintenance
+In the code below,
+
+The lower limit PWM value to maintain the car's forward motion is 39.
+
+The lower limit PWM value to maintain the car's turning motion is 95.
 
 ### References
-I referenced Nila's pages for formatting content. I also discussed ideas with Becky.
+I referenced Nila's and Wenyi's pages. I also discussed ideas with Becky and Luca.
