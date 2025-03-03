@@ -17,7 +17,7 @@ The motor driver circuit's operating voltage is 2.7-10.8VDC according to the [da
 ![](images/Lab4/powersupply.jpg)
 
 
-I used anlogWrite commands to generate PWM signals on the motor driver inputs and scoped the outputs.
+I used analogWrite commands to generate PWM signals on the motor driver inputs and scoped the outputs.
 
 ![](images/Lab4/pwm_code.jpg)
 ![](images/Lab4/full_setup.jpg)
@@ -36,13 +36,27 @@ The code and the corresponding video for the spin tests on each side of the car 
 ![](images/Lab4/wheels_code_snippet2.jpg)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sWNrK5JfFV4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+
 ### All Wheels Spinning
 ![](images/Lab4/all_wheels_code.jpg)
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O3TMd0nXmHE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Secured Car Components
+I secured the components into the car as shown.
+![](images/Lab4/Artemis_Top.jpg)
+
+![](images/Lab4/battery_top.jpg)
+
+
+I used duct tape to create straps that further secured the components by pressing the sticky sides together, leaving the ends adhesive for attachment.
+![](images/Lab4/artemis_tape.jpg)
+
+![](images/Lab4/battery_tape.jpg)
+
 
 ### Lower Limit PWM Value to Start Forward Movement
+
 
 ### Calibration
 
