@@ -24,23 +24,30 @@ I used analogWrite commands to generate PWM signals on the motor driver inputs a
 ![](images/Lab4/connections.jpg)
 
 The output signal has a 3.7V amplitude, matching the power supply. This was consistent across all output pins on both drivers. An example oscilloscope image of one of the outputs is shown.
+
 ![](images/Lab4/oscilloscope.jpg)
-After verifying that my motor drivers were working  soldered the motor drivers to the battery
+
 
 ### Wheels Spinning On Each Side
-The code and the corresponding video for the spin tests on each side of the car are shown.
 ![](images/Lab4/wheels_code_snippet1.jpg)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gqHCjJhukT0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+
 ![](images/Lab4/wheels_code_snippet2.jpg)
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sWNrK5JfFV4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+
 ### All Wheels Spinning
+After confirming my motor drivers worked with the power supply, I switched to battery power and verified that all wheels spun properly.
+
 ![](images/Lab4/all_wheels_code.jpg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O3TMd0nXmHE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 
 ### Secured Car Components
 I secured the components into the car as shown.
@@ -53,6 +60,7 @@ I used duct tape to create straps that further secured the components by pressin
 ![](images/Lab4/artemis_tape.jpg)
 
 ![](images/Lab4/battery_tape.jpg)
+
 
 
 ### Lower Limit PWM Value to Start Forward Movement
