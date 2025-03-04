@@ -98,7 +98,7 @@ Once I calibrated the left motor, I was able to get my robot to move in a straig
 
 ___
 ### Open Loop Control Sequence
-After verifying that my robot was able to move in a straight line, I wrote an open loop control program that includes some turns.
+After verifying that my robot was able to move in a straight line, I wrote an open loop control program.
 ![](images/Lab4/open_loop.jpg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qxFuCmpnBeI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
