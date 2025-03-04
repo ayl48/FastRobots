@@ -29,6 +29,8 @@ The output signal has a 3.7V amplitude, matching the power supply. This was cons
 
 ___
 ### Wheels Spinning On Each Side
+After scoping the outputs, I soldered the motor drivers to the motors and tested each one.
+
 ![](images/Lab4/wheels_code_snippet1.jpg)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gqHCjJhukT0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -41,7 +43,7 @@ ___
 ---
 
 ### All Wheels Spinning
-After confirming my motor drivers worked with the power supply, I switched to battery power and verified that all wheels spun properly.
+After confirming my motor drivers worked with the power supply, I switched to battery power and verified that all wheels can spin simultaneously.
 
 ![](images/Lab4/all_wheels_code.jpg)
 
@@ -50,7 +52,7 @@ After confirming my motor drivers worked with the power supply, I switched to ba
 ---
 
 ### Secured Car Components
-I secured the components into the car as shown.
+Next, I secured the components into the car as shown.
 ![](images/Lab4/Artemis_Top.jpg)
 
 ![](images/Lab4/battery_top.jpg)
