@@ -104,7 +104,11 @@ After verifying that my robot was able to move in a straight line, I wrote an op
 
 
 ### Frequency Discussion for analogWrite
-Using the code below, I was able to calculate the frequency at which analogWrite is able to write to the motors. The frequency is ___ Hz which is adequately fast for the motors
+Using the oscilloscope picture from earlier, I estimate the frequency of analogWrite to be approximately 267Hz. According to Arduino documentation, microcontrollers typically operate at PWM frequencies of 490Hz, although the specific frequency for the Artemis Nano is not mentioned.
+
+For controlling our inexpensive motors, this frequency is sufficient since very high precision and smooth control are not critical. However, at lower PWM frequencies, noise and vibrations tend to increase. By manually configuring the PWM frequency, these issues can be alleviated, resulting in quieter operation and potentially smoother control. 
+
+![](images/Lab4/analog_write.jpg)
 
 ### Lower Limit PWM Value for Motion Maintenance
 To determine the lower limit PWM value for maintaining motion after overcoming static friction, I created the following command. I began with the value for moving from rest and gradually decreased it in the loop until the robot stopped, identifying the lower limit for sustained movement. Bluetooth was used to send a 1 or 0, making it easier to switch between testing for sustained forward movement and turning. Each time the PWM value was decremented, the Artemis blinked, and I counted the blinks, observing when the car stopped to identify the corresponding PWM value.
@@ -120,4 +124,6 @@ The lower limit PWM value to maintain the car's turning motion is 95.
 
 
 ### References
-I referenced Nila's and Wenyi's pages. I also discussed ideas with Becky. 
+I referenced Nila's and Wenyi's pages. I also discussed ideas with Becky.
+Sources for analogWrite frequency discussion: [Improve Brushed DC Motor Performance: PWM Frequency](https://learn.adafruit.com/improve-brushed-dc-motor-performance/pwm-frequency) and [Arduino - analogWrite()](https://www.arduino.cc/reference/tr/language/functions/analog-io/analogwrite/)
+.
