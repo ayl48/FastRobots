@@ -102,11 +102,13 @@ Once I calibrated the left motor, I was able to get my robot to move in a straig
 After verifying that my robot was able to move in a straight line, I wrote an open loop control program that includes some turns.
 ![](images/Lab4/open_loop.jpg)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qxFuCmpnBeI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+  
 ### Frequency Discussion for analogWrite
 Using the oscilloscope picture from earlier, I estimate the frequency of analogWrite to be approximately 267Hz. According to Arduino documentation, microcontrollers typically operate at PWM frequencies of 490Hz, although the specific frequency for the Artemis Nano is not mentioned.
 
-For controlling our inexpensive motors, this frequency is sufficient since very high precision and smooth control are not critical. However, at lower PWM frequencies, noise and vibrations tend to increase. By manually configuring the PWM frequency, these issues can be alleviated, resulting in quieter operation and potentially smoother control. 
+For controlling our inexpensive motors, this frequency is sufficient since very high precision and smooth control are not critical. However, at lower PWM frequencies, noise and vibrations tend to increase. By manually configuring the PWM frequency, these issues can be alleviated, resulting in quieter operation and potentially smoother control.
 
 ![](images/Lab4/analog_write.jpg)
 
