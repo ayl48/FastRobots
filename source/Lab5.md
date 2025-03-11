@@ -121,7 +121,7 @@ I extrapolated data using by using the previous data point if the ToF sensors is
 
 #### Linear Interpolation
 I implemented the linear interpolation equation below which uses the previous two datapoints to predict the next if the ToF sensor is not ready with a reading.
-![](images/Lab5/interpolation_eq.jpg)
+![](images/Lab5/interpolation_eq.png)
 ![](images/Lab5/interpolate_code.jpeg)
 
 The graph for the raw data and the extrapolated data is shown.
