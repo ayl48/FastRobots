@@ -113,16 +113,20 @@ ___
 Using the same methods from previous labs, I calculated the frequency at which the ToF sensor returns new data: ~9.94 Hz. This is very slow, but no matter how much I shortened the sensor's time budget, I could not get a faster frequency. I will need to look deeper into this.
 ![](images/Lab5/10Hz.jpeg)
 
-After decoupling the ToF frequency from the PID loop by running the loop regardless of , I calculated the PID loop frequency to be approximately 121.25 Hz. To decouple the frequencies, I made the loop frequency dependent on the PID calculation rather than the sensor updates. When new ToF data is available, I updated the motor speed estimate; otherwise, I used the last saved value for PID calculations. This maintained continuous control without being constrained by the sensor's update rate.
+After decoupling the ToF frequency from the PID loop by running the loop regardless of , I calculated the PID loop frequency to be ~121.25 Hz. To decouple the frequencies, I made the loop frequency dependent on the PID calculation rather than the sensor updates. When new ToF data is available, I updated the motor speed estimate; otherwise, I used the last saved value for PID calculations. This maintained continuous control without being constrained by the sensor's update rate.
 
 #### Extrapolation Using Previous Datapoint
-Video with old point
-Graph with old data point
+I extrapolated data using by using the previous data point if the ToF sensors is not currently ready with a reading. (Note: This is the loop I used to measure the decoupled PID loop frequency.)
+
+![](images/Lab5/prev_data_code.jpg)
 
 #### Linear Interpolation
+I implemented the linear interpolation equation below which uses the previous two datapoints to predict the next if the ToF sensor is not ready with a reading.
+![](images/Lab5/interpolation_eq.jpg)
+![](images/Lab5/interpolate_code.jpeg)
 
-Video with linear Interpolation
-Graph with linear interpolation
+The graph for the raw data and the extrapolated data are shown.
+![](images/Lab5/interpolate_graph.jpeg)
 
 ### Wind-Up Protection for Integrator
 The integrator term in my controller caused a wind-up issue. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target distance. This issue caused my car to drive directly into the cabinet as shown below.
