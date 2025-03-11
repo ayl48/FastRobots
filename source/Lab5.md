@@ -124,7 +124,7 @@ I implemented the linear interpolation equation below which uses the previous tw
 ![](images/Lab5/interpolation_eq.jpg)
 ![](images/Lab5/interpolate_code.jpeg)
 
-The graph for the raw data and the extrapolated data are shown.
+The graph for the raw data and the extrapolated data is shown.
 ![](images/Lab5/interpolate_graph.jpeg)
 
 ### Wind-Up Protection for Integrator
