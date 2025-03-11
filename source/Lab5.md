@@ -73,9 +73,8 @@ I also include my clamping code for wind-up protection in my linear_pid function
 
 #### Proportional (P) Control
 First, I implemented proportional control. I started with an estimate by calculating the following:
-![](images/Lab5/kp_estimate.jpg)
-
-As always, the theoretical value requires adjustment to be suitable for practical application. I ended up tweaking this value through experimentation.
+![](images/Lab5/kp_estimate.jpg).
+I rearranged the equation for PWM control and estimated Kp using the maximum PWM I allowed and the maximum error, based on the ToF sensor's 4m range.As always, the theoretical value requires adjustment to be suitable for practical application. I ended up tweaking this value to be lower through experimentation.
 
 Kp = 0.04.
 
