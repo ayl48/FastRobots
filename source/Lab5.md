@@ -117,7 +117,7 @@ After decoupling the ToF frequency from the PID loop by running the loop regardl
 #### Extrapolation Using Previous Datapoint
 I extrapolated data using by using the previous data point if the ToF sensors is not currently ready with a reading. (Note: This is the loop I used to measure the decoupled PID loop frequency.)
 
-![](images/Lab5/prev_data_code.jpg)
+![](images/Lab5/prev_data_code.jpeg)
 
 #### Linear Interpolation
 I implemented the linear interpolation equation below which uses the previous two datapoints to predict the next if the ToF sensor is not ready with a reading.
