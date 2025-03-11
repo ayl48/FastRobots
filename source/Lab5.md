@@ -72,7 +72,10 @@ I also include my clamping code for wind-up protection in my linear_pid function
 ### Position Control
 
 #### Proportional (P) Control
-First, I implemented proportional control. I started with an estimate using the following calculation.
+First, I implemented proportional control. I started with an estimate by calculating the following:
+![](images/Lab5/kp_estimate.jpg)
+
+As always, the theoretical value requires adjustment to be suitable for practical application. I ended up tweaking this value through experimentation.
 
 Kp = 0.04.
 
@@ -84,7 +87,8 @@ Kp = 0.04.
 
 ___
 #### Proportional Integral (PI) Control
-I dec
+After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car's ability to reach the 1-foot mark with precision and accuracy, using this as a key indicator of effective tuning. I did end up lowering Kp as well after experimenting with the values further through trial and error.
+
 PI control without clamping: Kp = 0.032 and Ki = 0.01
 
 ![](images/Lab5/P_control/p_distance.jpeg)
@@ -106,10 +110,10 @@ Two other runs of my PI control are shown.
 
 ___
 ### Extrapolation
-Using the same methods from previous labs, I calculated the frequency at which the ToF sensor returns new data: ~9.94 Hz
+Using the same methods from previous labs, I calculated the frequency at which the ToF sensor returns new data: ~9.94 Hz. This is very slow, but no matter how much I shortened the sensor's time budget, I could not get a faster frequency. I will need to look deeper into this.
 ![](images/Lab5/10Hz.jpeg)
 
-PID speed 121.25 Hz.
+After decoupling the ToF frequency from the PID loop by running the loop regardless of , I calculated the PID loop frequency to be approximately 121.25 Hz. To decouple the frequencies, I made the loop frequency dependent on the PID calculation rather than the sensor updates. When new ToF data is available, I updated the motor speed estimate; otherwise, I used the last saved value for PID calculations. This maintained continuous control without being constrained by the sensor's update rate.
 
 #### Extrapolation Using Previous Datapoint
 Video with old point
@@ -137,7 +141,6 @@ Two videos of my wind-up integrator protection code are shown (Kp=0.05 and Ki = 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8rM_LcwEsAo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
 ___
 ## References
-I referenced pages written by Nila and Stephen. I also discussed ideas with Sabian, Becky, and Nita.
+I heavily referenced Professor Helbling's slides. I also referenced pages written by Nila, Mikayla, and Stephen. I discussed ideas with Sabian and Becky.
