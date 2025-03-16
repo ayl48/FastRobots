@@ -30,7 +30,7 @@ Arduino side:
 Python side:
 ![](images/Lab5/SET_CON_py.jpeg)
 
-The **START_RUN** command allows me to set the target distance (setpoint) and PID runtime, then executes PI control for the specified duration. The PI implementation will be discussed further in the implementation section. Lastly, it sends timestamped data, including distances, PWM values, P terms, and I terms, to the computer afterward for plotting.
+The **START_RUN** command allows me to set the target distance (setpoint) and PID runtime, then executes PI control for the specified duration. It sends timestamped data, including distances, PWM values, P terms, and I terms, to the computer afterward for plotting. The PI implementation will be discussed further in the implementation section.
 
 Arduino side:
 ![](images/Lab5/START_RUN_ard.jpg)
