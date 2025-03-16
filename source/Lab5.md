@@ -1,5 +1,4 @@
 # Lab 5: Linear PID Control and Linear Interpolation
-The objective of this lab
 
 ## Prelab
 I began by separating my previous lab code for motor control and ToF into header and CPP files to improve code organization. Additionally, I created a new header file specifically for my PID control functions. Due to time constraints, I have not yet created a header file for my IMU code. The header files are shown below.
@@ -78,6 +77,10 @@ I rearranged the equation for PWM control and estimated Kp using the maximum PWM
 
 Kp = 0.04.
 
+![](images/Lab5/P_control/p_distance.jpeg)
+![](images/Lab5/P_control/p_pwm.jpeg)
+![](images/Lab5/P_control/p_pterm.jpeg)
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6NMo0ybRPp8"
     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen>
@@ -89,10 +92,6 @@ ___
 After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car's ability to reach the 1-foot mark with precision and accuracy, using this as a key indicator of effective tuning. I did end up lowering Kp as well after experimenting with the values further through trial and error.
 
 PI control without clamping: Kp = 0.032 and Ki = 0.01
-
-![](images/Lab5/P_control/p_distance.jpeg)
-![](images/Lab5/P_control/p_pwm.jpeg)
-![](images/Lab5/P_control/p_pterm.jpeg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/x92iKCiqwtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
