@@ -62,7 +62,7 @@ In essence, the PID control equation combines three components to adjust a syste
 ------
 Like lab 5, I implemented only PI control because, through experimentation, I found it sufficient to make the robot turned to the target angle. The P term provided effective control, while the I term helped with fine-tuning the small and persistent errors. Since the robot is turning so slowly, and I'm lightly kicking the robot as opposed to punting it across the room, there are no substantial fluctuations or fast changes in the system that would necessitate the D term.
 
-I implemented my START_ORIENT_PID code very similarly to my linear PID code, I use a while loop to implement PI control for the desired duration. I compute the time step (dt) for the integral control and then update the PI values using the orient_pid function. At the end of the loop, I manage the turn direction based on the sign of the adjusted PWM value from the PI calculation.
+I implemented my **START_ORIENT_PID** code very similarly to my linear PID code, I use a while loop to implement PI control for the desired duration. I compute the time step (dt) for the integral control and then update the PI values using the orient_pid function. At the end of the loop, I manage the turn direction based on the sign of the adjusted PWM value from the PI calculation.
 
 ![](images/Lab5/START_RUN_ard1.jpg)
 
@@ -73,6 +73,8 @@ I also include my clamping code for wind-up protection in my orient_pid function
 ![](images/Lab5/lin_pid.jpg)
 ![](images/Lab5/helper_function.jpeg)
 
+### Programming Implementation Notes
+The setpoint cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time setpoint adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
 
 ## Lab Tasks
 
