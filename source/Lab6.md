@@ -34,7 +34,7 @@ The Bluetooth commands I added for orientation PID are displayed. Like in Lab 5,
 I am reusing the **SET_PID_PARAM** command which sets PI parameters (Kp and Ki). This command can change the parameter values while my controller is running.
 
 Arduino side:
-![](images/Lab5/SET_PID_PARAM.jpeg)
+![](images/Lab6/set_pid_param.jpeg)
 
 Python side:
 ![](images/Lab5/SET_PID_py.jpeg)
@@ -90,7 +90,9 @@ The  cannot currently be adjusted while the robot is running or moving forward/b
 In all my testing, I set 50 degrees as my setpoint or target angle.
 
 #### Proportional (P) Control
-First, I implemented proportional control by loosely following heuristic 1 from the slides. Through trial and error, I adjusted the Kp value until I settled on Kp = 0.0001.
+First, I implemented proportional control. Somehow I got lucky and guessed a good Kp value on the first try.
+
+Kp = 0.0001.
 
 ![](images/Lab6/p_angle.jpeg)
 ![](images/Lab6/p_pwm.jpeg)
@@ -100,9 +102,9 @@ First, I implemented proportional control by loosely following heuristic 1 from 
 
 ___
 #### Proportional Integral (PI) Control
-After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car's ability to return to the setpoint, using this as a key indicator of effective tuning.
+After determining Kp, I initially attempted to follow the heuristic procedure from the slides by increasing Ki until overshoot occurred and then gradually decreasing it until the overshoot disappeared. However, I ultimately had to rely on trial and error to find a suitable combination of Kp and Ki. My main focus was on the car's ability to return to the setpoint, using that as the primary indicator of effective tuning.
 
-PI control without clamping: Kp = 0.5 and Ki = 0.0005
+Kp = 0.5 and Ki = 0.0005
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rpV5EgI7W3g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ___
