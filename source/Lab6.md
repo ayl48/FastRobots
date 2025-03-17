@@ -81,24 +81,19 @@ The setpoint cannot currently be adjusted while the robot is running or moving f
 ### Orientation Control
 
 #### Proportional (P) Control
-First, I implemented proportional control.
+First, I implemented proportional control by loosely following heuristic 1 from the slides. Through trial and error, I adjusted the Kp value until I settled on Kp = 0.0001.
 
-Kp = 0.04.
+![](images/Lab5/P_control/p_angle.jpeg)
+![](images/Lab5/P_control/p_pwm.jpeg)
+![](images/Lab5/P_control/p_pterm.jpeg)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6NMo0ybRPp8"
-    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nsWOYTPYxV4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ___
 #### Proportional Integral (PI) Control
 After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car's ability to return to the set point, using this as a key indicator of effective tuning.
 
 PI control without clamping: Kp = 0.032 and Ki = 0.01
-
-![](images/Lab5/P_control/pi_angle.jpeg)
-![](images/Lab5/P_control/pi_pwm.jpeg)
-![](images/Lab5/P_control/pi_pterm.jpeg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/x92iKCiqwtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
