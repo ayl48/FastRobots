@@ -47,16 +47,7 @@ Arduino side:
 Python side:
 ![](images/Lab5/SET_CON_py.jpeg)
 
-The **START_ORIENT_PID** command allows me to set the target angle (set point) and PID runtime, then executes PI control for the specified duration. After executing the control, it sends timestamped data, including angles, PWM values, P terms, and I terms, to the computer for plotting. The PI control implementation will be covered in the next section.
-
-Arduino side:
-![](images/Lab6/start_orient_ard1.jpg)
-![](images/Lab6/start_orient_ard2.jpg)
-
-Python side:
-![](images/Lab6/notif.jpeg)
-
-![](images/Lab6/START_ORIENT_PID_py.jpg)
+The **START_ORIENT_PID** command allows me to set the target angle () and PID runtime, then executes PI control for the specified duration. After executing the control, it sends timestamped data, including angles, PWM values, P terms, and I terms, to the computer for plotting. The PI control implementation will be covered in the next section.
 
 I retained the hard stop from before in the main loop as a safety measure in case the Bluetooth connection fails.
 ![](images/Lab5/hard_stop.jpg)
@@ -73,61 +64,75 @@ Like lab 5, I implemented only PI control because, through experimentation, I fo
 
 I implemented my **START_ORIENT_PID** code very similarly to my linear PID code, I use a while loop to implement PI control for the desired duration. I compute the time step (dt) for the integral control and then update the PI values using the orient_pid function. At the end of the loop, I manage the turn direction based on the sign of the adjusted PWM value from the PI calculation.
 
-![](images/Lab5/START_RUN_ard1.jpg)
+Arduino side:
+![](images/Lab6/start_orient_ard1.jpg)
+![](images/Lab6/start_orient_ard2.jpg)
 
-In my **orient_pid** function, I implement PI according to the equation.
+Python side:
+![](images/Lab6/start_orient_pid.jpeg)
+
+In my **orient_pid** function located in the orient.cpp file, I implement PI according to the equation.
+
+orient.h:
+![](images/Lab6/orient_h.jpeg)
+
+orient.cpp:
+![](images/Lab6/orient_cpp.jpeg)
 
 I also include my clamping code for wind-up protection in my orient_pid function. The clamp flag, activated in **SET_CONSTRAINT**, controls the conditional that encompasses the clamping code.
 
-![](images/Lab5/lin_pid.jpg)
-![](images/Lab5/helper_function.jpeg)
-
 ### Programming Implementation Notes
-The set point cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time set point adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
+The  cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time  adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
 
 ## Lab Tasks
 
 ### Orientation Control
+In all my testing, I set 50 degrees as my setpoint or target angle.
 
 #### Proportional (P) Control
 First, I implemented proportional control by loosely following heuristic 1 from the slides. Through trial and error, I adjusted the Kp value until I settled on Kp = 0.0001.
 
-![](images/Lab6/P_control/p_angle.jpeg)
-![](images/Lab6/P_control/p_pwm.jpeg)
-![](images/Lab6/P_control/p_pterm.jpeg)
+![](images/Lab6/p_angle.jpeg)
+![](images/Lab6/p_pwm.jpeg)
+![](images/Lab6/p_pterm.jpeg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nsWOYTPYxV4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ___
 #### Proportional Integral (PI) Control
-After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car's ability to return to the set point, using this as a key indicator of effective tuning.
+After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car's ability to return to the setpoint, using this as a key indicator of effective tuning.
 
-PI control without clamping: Kp = 0.032 and Ki = 0.01
+PI control without clamping: Kp = 0.5 and Ki = 0.0005
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/x92iKCiqwtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-![](images/Lab6/PI_control/pi_noclamp_angle.jpeg)
-![](images/Lab6/PI_control/pi_noclamp_pwm.jpeg)
-![](images/Lab6/PI_control/pi_noclamp_pterm.jpeg)
-![](images/Lab6/PI_control/pi_noclamp_iterm.jpeg)
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rpV5EgI7W3g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ___
 
-### Derivative Term Discussion
-Although, I did not use a derivate term in my controller, I will address the discussion points written in the handout on a high level. Taking the derivative of an integrated signal is valid because it reflects how the accumulated error changes over time, allowing for a response based on past behavior. However, this can cause derivative kick when the set point changes suddenly, leading to large spikes in the derivative term. To mitigate this, it's better to apply the derivative to the error directly and use a low-pass filter to smooth out high-frequency noise.
+![](images/Lab6/pi_noclamp_angle.jpeg)
+![](images/Lab6/pi_noclamp_pwm.jpeg)
+![](images/Lab6/pi_noclamp_pterm.jpeg)
+![](images/Lab6/pi_noclamp_iterm.jpeg)
 
-### Sampling Frequency With the DMP
-Using the same methods from previous labs, I calculated the frequency at which the DMP could return new data: ~44.73 Hz.
+### Derivative Term Discussion
+Although, I did not use a derivate term in my controller, I will address the discussion points written in the handout on a high level. Taking the derivative of an integrated signal is valid because it reflects how the accumulated error changes over time, allowing for a response based on past behavior. However, this can cause derivative kick when the  changes suddenly, leading to large spikes in the derivative term. To mitigate this, it's better to apply the derivative to the error directly and use a low-pass filter to smooth out high-frequency noise.
+
+### Sampling Frequency and Performance of DMP
+Using the same methods from previous labs, I calculated the frequency at which the DMP could return new data: ~45 Hz.
 ![](images/Lab6/DMP_freq.jpeg)
 
-This is still much slower than the decoupled PID loop frequency, which I calculated to be approximately 121.25 Hz. As before, the sensor remains the limiting factor in the loop speed.
+I conducted a test to evaluate the effect of motor noise on the DMP data. By placing the car on the ground, I recorded angle measurements with the motors both on and off. The graph below shows that the DMP is highly resistant to noise, as the angle measurements differ by only about 1 degree between the two conditions.
+![](images/Lab6/noise_test.jpeg)
 
 ### Wind-Up Protection for Integrator
-The integrator term in my controller caused a wind-up issue as expected. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target angle. This issue caused my car to oscillate between left and right turns.
 
 #### No Wind-up Protection
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ITvxpkxNnqw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+The integrator term in my controller caused a wind-up issue as expected. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target angle. This issue caused my car to spin in circles. Surprisingly, my car still ended up really close to the 50 degree setpoint in the end.
 
+![](images/Lab6/pi_noclamp2_angle.jpeg)
+![](images/Lab6/pi_noclamp2_pwm.jpeg)
+![](images/Lab6/pi_noclamp2_pterm.jpeg)
+![](images/Lab6/pi_noclamp2_iterm.jpeg)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7Q-QikCo2gM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 _____
 
 #### Wind-Up Protection
@@ -136,7 +141,12 @@ Like lab 5, I implemented clamping in the code below using the logic shown in Pr
 
 ![](images/Lab5/clamp_code.jpg)
 
+![](images/Lab6/pi_clamp_angle.jpeg)
+![](images/Lab6/pi_clamp_pwm.jpeg)
+![](images/Lab6/pi_clamp_pterm.jpeg)
+![](images/Lab6/pi_clamp_iterm.jpeg)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kqI4PpA5Q6U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ___
 ## References
