@@ -18,6 +18,15 @@ DMP.cpp is shown below.
 ![](images/Lab6/DMP_cpp1.jpeg)
 ![](images/Lab6/DMP_cpp2.jpeg)
 
+The [quaternion](https://en.wikipedia.org/w/index.php?title=Conversion_between_quaternions_and_Euler_angles&section=8#Source_code_2) data is taken from the DMP and converted to Euler angles. In my DMP code, I calculate only yaw to maximize performance and minimize computational overhead since roll and pitch are not needed for this lab.
+
+The DMP sends its data through a FIFO queue before I2C transmission. The queue must be read and emptied regularly to get the latest orientation readings. In order to prevent the FIFO from filling up due to slow reads, I reduce the DMP output rate to ~10Hz and avoid unnecessary delays, ensuring continuous polling unless the queue is empty.
+
+DMP Output Rate Reduction:
+![](images/Lab6/dmp_rate.jpeg)
+
+Delaying Only When Queue is Empty:
+![](images/Lab6/dmp_delay.jpeg)
 
 ### Bluetooth Commands
 The Bluetooth commands I added for orientation PID are displayed. Like in Lab 5, they allow me to set parameters and control the start/stop of my orientation PID code from my computer.
@@ -68,13 +77,13 @@ I implemented my **START_ORIENT_PID** code very similarly to my linear PID code,
 
 In my **orient_pid** function, I implement PI according to the equation.
 
-I also include my clamping code for wind-up protection in my orient_pid function. The clamp flag, activated in SET_CONSTRAINT, controls the conditional that encompasses the clamping code.
+I also include my clamping code for wind-up protection in my orient_pid function. The clamp flag, activated in **SET_CONSTRAINT**, controls the conditional that encompasses the clamping code.
 
 ![](images/Lab5/lin_pid.jpg)
 ![](images/Lab5/helper_function.jpeg)
 
 ### Programming Implementation Notes
-The setpoint cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time setpoint adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
+The set point cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time set point adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
 
 ## Lab Tasks
 
@@ -83,9 +92,9 @@ The setpoint cannot currently be adjusted while the robot is running or moving f
 #### Proportional (P) Control
 First, I implemented proportional control by loosely following heuristic 1 from the slides. Through trial and error, I adjusted the Kp value until I settled on Kp = 0.0001.
 
-![](images/Lab5/P_control/p_angle.jpeg)
-![](images/Lab5/P_control/p_pwm.jpeg)
-![](images/Lab5/P_control/p_pterm.jpeg)
+![](images/Lab6/P_control/p_angle.jpeg)
+![](images/Lab6/P_control/p_pwm.jpeg)
+![](images/Lab6/P_control/p_pterm.jpeg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nsWOYTPYxV4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -114,7 +123,7 @@ Using the same methods from previous labs, I calculated the frequency at which t
 This is still much slower than the decoupled PID loop frequency, which I calculated to be approximately 121.25 Hz. As before, the sensor remains the limiting factor in the loop speed.
 
 ### Wind-Up Protection for Integrator
-The integrator term in my controller caused a wind-up issue as expected. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target angle. This issue caused my car to continuously spin in circles.
+The integrator term in my controller caused a wind-up issue as expected. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target angle. This issue caused my car to oscillate between left and right turns.
 
 #### No Wind-up Protection
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ITvxpkxNnqw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -122,10 +131,11 @@ The integrator term in my controller caused a wind-up issue as expected. The acc
 _____
 
 #### Wind-Up Protection
-To fix this issue, I implemented clamping in the code below using the logic shown in Professor Helbling's slides. The accumulated error is reset to 0 when the controller is clamped, helping to prevent oversaturation.
+Like lab 5, I implemented clamping in the code below using the logic shown in Professor Helbling's slides to fix the wind-up issue. The accumulated error is reset to 0 when the controller is clamped, helping to prevent oversaturation.
 ![](images/Lab5/clamp_slide.jpg)
 
 ![](images/Lab5/clamp_code.jpg)
+
 
 
 ___
