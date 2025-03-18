@@ -4,9 +4,9 @@
 In Lab 6, I built upon my Lab 5 code by using case statements for PID control and adjusting the Kp and Ki values.
 
 ### PID Input Signal
-Remembering how much drift affected my yaw measurement in Lab 2, I decided to test out the Digital Motion Processor in the InvenSense ICM-20948 sensor instead. Here is a video of the DMP example code running with the visualizer.
+Remembering how much drift affected my yaw measurement in Lab 2, I decided to test out the Digital Motion Processor (DMP) in the InvenSense ICM-20948 sensor instead. Here is a video of the DMP example code running with the visualizer.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VRjVanpF9zI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-___
+---
 The gyroscope data alone introduced drift over time due to the accumulation of small errors, which led to increasing orientation inaccuracies. While bias correction and calibration could help, the drift was still nontrivial. I switched to the DMP because it mitigates this by fusing data from the gyroscope, accelerometer, and magnetometer, reducing drift and providing more stable yaw measurements. This sensor fusion improves orientation tracking and helps stabilize the yaw value when the robot is stationary. However, enabling the DMP requires extra memory on the microcontroller and modifications to the SparkFun ICM-20948 Arduino library.
 
 After making the decision to to switch from using the gyroscope data alone to using the DMP, I organized the DMP code into a separate header and CPP file like how I did with the ToF sensor code in Lab 5.
@@ -82,7 +82,7 @@ orient.cpp:
 I also include my clamping code for wind-up protection in my orient_pid function. The clamp flag, activated in **SET_CONSTRAINT**, controls the conditional that encompasses the clamping code.
 
 ### Programming Implementation Notes
-The  cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time  adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
+The orientation cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time  adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.
 
 ## Lab Tasks
 
