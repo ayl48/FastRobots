@@ -7,8 +7,6 @@
 ![](images/Lab4/lab4_motor_wiring.jpg)
 
 I used pins A0-A3 on the Artemis to control the motors. The Artemis and the motors will be powered by separate batteries because the motors draw large currents, generating noise and inductive spikes when switched on and off.
-
-(Turn this into a table) I used blue wires for the In1 pairs of for both motor drivers and and yellow wires for the In2 pair of the first
 ___
 ## Lab Tasks
 
@@ -105,6 +103,7 @@ After verifying that my robot was able to move in a straight line, I wrote an op
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qxFuCmpnBeI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ___
+
 ### Frequency Discussion for analogWrite
 Using the oscilloscope picture from earlier, I estimate the frequency of analogWrite to be approximately 267Hz. According to Arduino documentation, microcontrollers typically operate at PWM frequencies of 490Hz, although the specific frequency for the Artemis Nano is not mentioned.
 

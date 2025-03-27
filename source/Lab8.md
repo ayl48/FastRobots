@@ -1,6 +1,6 @@
-# Lab 8: Stunts
+# Lab 7: Kalman Filter
 
-## 
+## Drag and Momentum Estimation
 
 I use a step response to estimate drag and momentum by initially setting the PWM to 0 and then applying a constant PWM value. I chose a PWM of 100, which is about 39% of the maximum PWM used in my linear PID lab, instead of the recommended 50-100% of the maximum u, because the robot moved too quickly at higher PWM values, making it difficult to collect a sufficient number of data points.
 
@@ -21,7 +21,7 @@ For ease of calculation, I converted my values to SI units before performing the
 
 ## KF Implementation in Python (Simulation)
 
-Putting more trust in our model, the Kalman graph deviates from my measurements too much.
+Putting more trust in our model, the Kalman graph deviates from my measurements too much. 
 
 Putting more trust in our measurements, the Kalman graph matches the measurements almost exactly. I used the parameters: sigma1 = 500 = sigma2 and sigma 3 = 45.
 
