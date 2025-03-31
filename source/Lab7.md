@@ -14,14 +14,15 @@ The distance and velocity graphs are shown below. In the velocity graph, you can
 ![](images/Lab7/fitted_velocity.jpeg)
 
 The following equations can be used to calculate drag and momentum.
-![](images/Lab7/drag_eq.jpeg)
+![](images/Lab7/drag_eq.png)
 
 For ease of calculation, I converted my values to SI units before performing the calculations.
 ![](images/Lab7/calc.png)
 
 ## KF Implementation in Python (Simulation)
 
-Putting more trust in our model, the Kalman graph deviates from my measurements too much. 
+
+Putting more trust in our model, the Kalman graph deviates from my measurements too much.
 
 Putting more trust in our measurements, the Kalman graph matches the measurements almost exactly. I used the parameters: sigma1 = 500 = sigma2 and sigma 3 = 45.
 
