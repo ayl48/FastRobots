@@ -41,7 +41,7 @@ Putting more trust in our measurements, the Kalman graph matches the measurement
 ## Kalman Filter Implementation on the Robot
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kqI4PpA5Q6U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ___
+
 ## References
 I heavily referenced Professor Helbling's slides and pages written by Stephan and Mikayla. I discussed ideas with Becky and Sabian.
