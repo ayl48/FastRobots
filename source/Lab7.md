@@ -25,23 +25,24 @@ For ease of calculation, I converted my values to SI units before performing the
 ![](images/Lab7/kf_py1.jpeg)
 ![](images/Lab7/kf_py2.jpeg)
 
-The estimated model parameters done using calculations is decently accurate, but does not follow the data too closely. Here, sigma1 = sigma2 = 70 and sigma 3 = 15.
+The estimated model parameters done using calculations is decently accurate, but does not follow the data too closely. Here, sigma1=sigma2=70 and sigma3=15.
 
 ![](images/Lab7/model_est.jpeg)
 
-Putting more trust in our model, the Kalman graph deviates from my measurements too much. Here, sigma1 = sigma2 = 50 and sigma 3 = 50.
+Putting more trust in our model, the Kalman graph deviates from my measurements too much. Here, sigma1= sigma2=50 and sigma3=50.
 
 ![](images/Lab7/kf_model_py.jpeg)
 
-Putting more trust in our measurements, the Kalman graph matches the measurements almost exactly. Here, sigma1 = sigma2 = 180 and sigma 3 = 45.
+Putting more trust in our measurements, the Kalman graph matches the measurements almost exactly. Here, sigma1=sigma2=180 and sigma3=45.
 
 ![](images/Lab7/kf_measure_py.jpeg)
 
 
 ## Kalman Filter Implementation on the Robot
 
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kqI4PpA5Q6U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ___
 
 ## References
-I heavily referenced Professor Helbling's slides and pages written by Stephan and Mikayla. I discussed ideas with Becky and Sabian.
+I heavily referenced Professor Helbling's slides and pages written by Stephan and Mikayla. I discussed ideas with Becky, Sabian, and Akshati. 
