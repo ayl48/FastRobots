@@ -1,8 +1,10 @@
 # Lab 7: Kalman Filter
 
+In this lab, I implemented a Kalman Filter in a python simulation and on my robot. A Kalman Filter is a method to estimate the robot’s location by combining predictions from a model with real sensor data. In this case, we’re using a state space model to predict the robot’s distance from the wall, then updating that prediction using the ToF sensor reading. The process has two steps: prediction and update. The equations for these steps are shown in the robot implementation section. The first part of the lab focuses on estimating drag and momentum using steady-state velocity data to determine values for the model in both the simulation and the robot implementation.
+
 ## Drag and Momentum Estimation
 
-I use a step response to estimate drag and momentum by initially setting the PWM to 0 and then applying a constant PWM value. I chose a PWM of 100, which is about 39% of the maximum PWM used in my linear PID lab, instead of the recommended 50-100% of the maximum u, because the robot moved too quickly at higher PWM values, making it difficult to collect a sufficient number of data points.
+I use a step response to collect data for the drag and momentum estimation by initially setting the PWM to 0 and then applying a constant PWM value. I chose a PWM of 100, which is about 39% of the maximum PWM used in my linear PID lab, instead of the recommended 50-100% of the maximum u, because the robot moved too quickly at higher PWM values, making it difficult to collect a sufficient number of data points.
 
 ![](images/Lab7/100pwm.jpeg)
 
@@ -19,6 +21,9 @@ The following equations can be used to calculate drag and momentum.
 For ease of calculation, I converted my values to SI units before performing the calculations.
 ![](images/Lab7/calc.png)
 
+The state space model uses the robot’s momentum and drag to form the A and B matrices with the two states being position and velocity. The A and B matrices are shown below. In this lab, the C matrix is set to [1 0], meaning we’re only measuring the robot’s position, not its velocity which is a simplification of what was described in lecture.
+
+![](images/Lab7/ABmatrix.png)
 
 ## Kalman Filter Implementation in Python (Simulation)
 ![](images/Lab7/kf_py.jpeg)
@@ -61,4 +66,4 @@ The KF command incorporates the Kalman filter into the Lab 5 linear extrapolatio
 ___
 
 ## References
-I referenced Professor Helbling's slides and Wenyi's page. I also discussed ideas with Becky, Sabian, and Akshati.
+I referenced Professor Helbling's slides, Wenyi's page, and Mikayla's page. I also discussed ideas with Becky, Sabian, and Akshati.
