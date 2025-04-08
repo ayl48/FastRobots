@@ -57,8 +57,6 @@ Note: In all the demo graphs, the data for the return trip after the flip are in
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PDJ9GCCFWjM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Q9RoNNoFzsk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ___
 ## References
  I referenced Wenyi's page. I discussed ideas with Becky and Akshati.
