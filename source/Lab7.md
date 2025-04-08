@@ -62,4 +62,4 @@ The KF command incorporates the Kalman filter into the Lab 5 linear extrapolatio
 ___
 
 ## References
-I heavily referenced Professor Helbling's slides and Wenyi's page. I also discussed ideas with Becky, Sabian, and Akshati.
+I referenced Professor Helbling's slides and Wenyi's page. I also discussed ideas with Becky, Sabian, and Akshati.
