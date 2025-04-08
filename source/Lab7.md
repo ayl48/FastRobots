@@ -41,7 +41,7 @@ Putting more trust in our measurements, the Kalman graph matches the measurement
 I implemented the following Kalman Filter algorithm provided in Professor Helbling's slides.
 ![](images/Lab7/kalman_math.jpeg)
 
-I organized my Kalman filter code into kf.cpp and chose not to include the kf.h file since it only contains a single function: kalman_filter. This function takes in mu (the control input, e.g., PWM), y (the latest sensor measurement), and an update flag, which is set to 0 or 1 in my KF command that will be discussed later. The function always predicts and prepares a measurement update every time it is called. However, it only updates the state estimate x and state uncertainty sig when the update flag is set to 1.
+I organized my Kalman filter code into kf.cpp and kf.h where I wrote a single function: kalman_filter. This function takes in mu (the control input, e.g., PWM), y (the latest sensor measurement), and an update flag, which is set to 0 or 1 in my KF command that will be discussed later. The function always predicts and prepares a measurement update every time it is called. However, it only updates the state estimate x and state uncertainty sig when the update flag is set to 1.
 
 ![](images/Lab7/kf_ard1.jpeg)
 ![](images/Lab7/kf_ard2.jpeg)
