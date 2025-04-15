@@ -5,7 +5,7 @@ In Lab 9, I used my robot to build a map of a static room that can later support
 ![](images/Lab9/habitat.jpeg)
 
 
-## Orientation Control
+## PI Orientation Control
 To help the robot overcome static friction while spinning in place, I applied tape to the wheels. I started with masking tape as a residue-free buffer, then added a layer of smooth duct tape on top to reduce friction and allow the wheels to rotate more easily.
 
 ![](images/Lab9/tape_wheel1.jpeg)
