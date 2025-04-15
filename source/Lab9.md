@@ -9,11 +9,12 @@ To organize the code and make this easier,  I created a **run_orientPI** functio
 
 In my **MAP** case statement, I use a for loop to increment the angles.
 
+
 To help the robot overcome static friction and start turning in small increments, I taped the wheels to make them smoother and easier to rotate. I first applied masking tape as a buffer since it doesn't leave residue on the wheels. Then, I layered duct tape on top because its slippery surface helps the robot overcome static friction more easily.
 
 <p float="left">
-  <img src="images/Lab9/tape_wheel.jpeg" width="300"/>
-  <img src="images/Lab9/tape_wheel1.jpeg" width="300"/>
+  <img src="/images/Lab9/tape_wheel.jpeg" width="300"/>
+  <img src="/images/Lab9/tape_wheel1.jpeg" width="300"/>
 </p>
 
 
