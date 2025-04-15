@@ -83,4 +83,4 @@ To draw the line-based map manually, I wrote a draw_line function that draws a l
 
 ___
 ## References
-I referenced pages written by Wenyi and Mikayla. I also worked with Becky and Akshati. Lastly, I used Professor Helbling's transformation matrices slides.
+I referenced pages written by Wenyi, Daria, and Mikayla. I also worked with Becky and Akshati. Lastly, I used Professor Helbling's transformation matrices slides.
