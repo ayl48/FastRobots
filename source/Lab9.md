@@ -30,13 +30,17 @@ ___
 I executed a complete turn at the following marked coordinates in the lab space: (-3,-2), (5,3), (0,3), and (5,-3)
 
 ### Plots for Position (-3,-2)
-
+![](images/Lab9/Plots/polar_n3n2.png)
 
 ### Plots for Position (5,3)
+![](images/Lab9/Plots/polar_53.png)
 
 ### Plots for Position (0,3)
+![](images/Lab9/Plots/time_angle_03.png)
+![](images/Lab9/Plots/polar_03.png)
 
 ### Plots for Position (5,-3)
+![](images/Lab9/Plots/polar_5n3.png)
 
 ## Conversion to Line-Based Map
 To convert
