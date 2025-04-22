@@ -1,58 +1,61 @@
-# Lab 10: Simulation
+# Lab 10: Grid Localization using Bayes Filter
+
+In this lab, I simulate grid localization using the Bayes filter algorithm in Python. Grid localization is the process of determining the position of a mobile robot within a known map of its environment that has been divided into a grid.
+
+I use a Gaussian Distribution to model the measurement noise, which can be thought of as a simplified Beam model where noise from failures, unexpected objects, and random measurements are omitted. I use the odometry motion model with the Gaussian noise model and record data before and after each movement. The relative motion parameters are described by variables rotation1, translation, and rotation2. Using the Bayes filter algorithm, I can localize the robot. There are two steps: a prediction step to incorporate control input data (movement) and an update step to incorporate observation data (measurement).
 
 
-
-## Flip Implementation
-
-
-**Arduino Code:**
-![](images/Lab8/ard_1.jpeg)
-![](images/Lab8/ard_2.jpeg)
-![](images/Lab8/ard_3.jpeg)
-
-Helper Function For Storing data:
-![](images/Lab8/helper.jpeg)
-
-**Python Command:**
-![](images/Lab8/python_command.jpeg)
-
-## Flip Videos
-
-### Flip Run 1
-**Stunt Completion Time:** 1.93s
-
-![](images/Lab8/Flip1.jpeg)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XyZOh4HU9a8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-___
-
-### Flip Run 2
-**Stunt Completion Time:** 2.08s
-
-![](images/Lab8/Flip2.jpeg)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/IG5O3Za6K4k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-___
-
-### Flip Run 3
-**Stunt Completion Time:** 2.00s
-
-![](images/Lab8/Flip3.jpeg)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/H5lXT2y9cxg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-___
+## Simulation Code
 
 
+### compute_control function
 
-![](images/Lab8/Window.jpg)
+The compute_control function computes the odometry model parameters shown below from Professor Helbling's slides) and computes control input u given the pervious pose at time t-1 and current pose at time t.
+![](images/Lab10/odometry_slide.jpeg)
 
-## Bloopers
+The model parameters in the Python code delta_rot_1, delta_trans, and delta_rot_2 are computed from the current and previous poses passed into the function.
 
+![](images/Lab10/compute_control.jpeg)
+
+### odom_motion_model
+
+The odom_motion_model function calculates the probability of the robot transitioning from the previous pose to the current pose by plugging in The actual and modeled control inputs into a Gaussian function.
+
+![](images/Lab10/odom_eq.jpeg)
+
+![](images/Lab10/odom.jpeg)
+
+
+### prediction_step
+
+The prediction_step function simply implements the prediction step of the Bayes Filter Algorithm. The previous functions are used to support the implementation. It uses the current and previous odometry readings and motion model parameters to predict the robot's new belief. This is done by looping through all possible previous and current pose combinations and calling odom_motion_model to compute probabilities that are accumulated and normalized to add up to 1. To speed up this computationally intensive process, only probabilities over 0.0001 contribute to the belief. The tradeoff is that we lose a bit of accuracy.
+
+![](images/Lab10/bayes.jpeg)
+
+![](images/Lab10/prediction.jpeg)
+
+
+### sensor_model
+The sensor_model function calculates the likelihood of each observation based on a Gaussian distribution.
+![](images/Lab10/sensor_model.jpeg)
+
+
+### update_step
+The update_step function performs the update step of the Bayes filter by multiplying the measurement probability with the predicted belief to get the belief.
+
+![](images/Lab10/bayes.jpeg)
+
+![](images/Lab10/update.jpeg)
+
+
+## Simulation Results
+The odometry model is plotted in red, ground truth in green, and belief in blue. 
+
+### Localization Without Bayes Filter
+
+### Localization With Bayes
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PDJ9GCCFWjM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ___
 ## References
- I referenced Wenyi's page. I discussed ideas with Becky and Akshati.
+ I referenced pages written by Daria, Mikayla, and Stephan. I also referenced Professor Helbling's and Professor Peterson's slides. Lastly, I discussed ideas with Becky and Akshati.
