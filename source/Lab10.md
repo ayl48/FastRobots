@@ -49,12 +49,14 @@ The update_step function performs the update step of the Bayes filter by multipl
 
 
 ## Simulation Results
-The odometry model is plotted in red, ground truth in green, and belief in blue. 
+In the simulation plots, the odometry model is plotted in red, ground truth in green, and belief in blue (only shown for localization with Bayes). As shown in the video below, the odometry model alone is pretty inadequate as points are drawn outside the map boundary. When we add the Bayes filter to the localization simulation, we can see that the belief approximates the robot's true position very well as it tracks the ground truth plot.
 
 ### Localization Without Bayes Filter
+<iframe width="560" height="315" src="https://www.youtube.com/embed/smKoO4KSoWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Localization With Bayes
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PDJ9GCCFWjM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tBCk44oePKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ___
 ## References
