@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 1B: Bluetooth &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 2: IMU" href="../Lab2/" />
+    <link rel="prev" title="Lab 1A: Artemis Board" href="../Lab1A/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 1B: Bluetooth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prelab">Prelab</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#computer-setup">Computer Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-base">Code Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#board-setup">Board Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configurations">Configurations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-tasks">Lab Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#echo-command">ECHO Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#send-three-floats-command">SEND_THREE_FLOATS Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-time-millis-command">GET_TIME_MILLIS Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notification-handler">Notification Handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#live-time-data">Live Time Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#send-time-data-command">SEND_TIME_DATA Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-temp-readings-command">GET_TEMP_READINGS Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advantages-and-disadvantages-of-data-transmission-methods">Advantages and Disadvantages of Data Transmission Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#effective-data-rate-and-overhead">Effective Data Rate and Overhead</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reliability">Reliability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#discussion">Discussion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 1B: Bluetooth</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab1B.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-1b-bluetooth">
+<h1>Lab 1B: Bluetooth<a class="headerlink" href="#lab-1b-bluetooth" title="Link to this heading"></a></h1>
+<p>The lab objective is to set up Bluetooth communication between my computer and the Artemis board, and to create a framework for data exchange that can be adapted for future labs.</p>
+<section id="prelab">
+<h2>Prelab<a class="headerlink" href="#prelab" title="Link to this heading"></a></h2>
+<section id="computer-setup">
+<h3>Computer Setup<a class="headerlink" href="#computer-setup" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Install Python 3 and pip.</p></li>
+<li><p>Install a virtual environment by running the following commands in Terminal or any available command line interface (CLI). Run the second command in the desired project directory.</p></li>
+</ol>
+<p>python3 -m pip install –user virtualenv</p>
+<p>python3 -m venv FastRobots_ble</p>
+<ol class="arabic simple" start="3">
+<li><p>To activate or deactivate the virtual environment use the commands below.</p></li>
+</ol>
+<p>source FastRobots_ble/bin/activate</p>
+<p>deactivate</p>
+<ol class="arabic simple" start="4">
+<li><p>Install bleak Python packages while the virtual environment is activated.</p></li>
+</ol>
+<p>pip install numpy pyyaml colorama nest_asyncio bleak jupyterlab</p>
+<ol class="arabic simple" start="5">
+<li><p>After installation, start Jupyter Lab by running jupyter lab in the CLI while the virtual environment is activated.</p></li>
+</ol>
+</section>
+<section id="code-base">
+<h3>Code Base<a class="headerlink" href="#code-base" title="Link to this heading"></a></h3>
+<p>This codebase enables Bluetooth Low Energy (BLE) communication between an Arduino-based Artemis board and a Python program on a computer. A Jupyter notebook on the computer sends commands and interacts with the board over BLE. The ble_arduino.ino file runs on the board, receiving and executing commands.</p>
+</section>
+<section id="board-setup">
+<h3>Board Setup<a class="headerlink" href="#board-setup" title="Link to this heading"></a></h3>
+<p>Burn ble_arduino.ino onto the Artemis and set the serial monitor baud rate to 115200 bps to find its MAC address.</p>
+<p><img alt="" src="../_images/Artemis_address.png" /></p>
+</section>
+<section id="configurations">
+<h3>Configurations<a class="headerlink" href="#configurations" title="Link to this heading"></a></h3>
+<p>In connections.yaml, add the Artemis MAC address and a new UUID generated in Python.</p>
+<p><img alt="" src="../_images/UUID_gen.png" /></p>
+<p>Add the UUID in ble_arduino.ino as well.</p>
+<p><img alt="" src="../_images/service_uuid.png" /></p>
+<p>To create a new command, add it to cmd_types.py and enum Command Types in Arduino, making sure they match.</p>
+</section>
+</section>
+<section id="lab-tasks">
+<h2>Lab Tasks<a class="headerlink" href="#lab-tasks" title="Link to this heading"></a></h2>
+<section id="echo-command">
+<h3>ECHO Command<a class="headerlink" href="#echo-command" title="Link to this heading"></a></h3>
+<p>The ECHO command sends a String from the computer to the Artemis board. In response, the board augments the String and sends it back to the computer, which then prints it.</p>
+<p>Case statement Arduino:
+<img alt="" src="../_images/echo_arduino.jpeg" /></p>
+<p>Echoed response from the Artemis board to Python:
+<img alt="" src="../_images/Echo_py.jpeg" /></p>
+</section>
+<section id="send-three-floats-command">
+<h3>SEND_THREE_FLOATS Command<a class="headerlink" href="#send-three-floats-command" title="Link to this heading"></a></h3>
+<p>This command sends three float values to the Artemis board, but does not expect a response. The goal is to extract these values in Arduino so they may be used later.</p>
+<p>Command sent in Python:
+<img alt="" src="../_images/3FloatsPy.jpeg" /></p>
+<p>Case statement in Arduino:
+<img alt="" src="../_images/3FloatsArd.jpeg" /></p>
+<p>The float values were printed in the serial monitor to verify they were successfully extracted.
+<img alt="" src="../_images/threefloats.PNG" /></p>
+</section>
+<section id="get-time-millis-command">
+<h3>GET_TIME_MILLIS Command<a class="headerlink" href="#get-time-millis-command" title="Link to this heading"></a></h3>
+<p>When this command is sent, the Artemis board transmits a String containing the time in milliseconds with prefix “T” to the computer.</p>
+<p>Results in Python:
+<img alt="" src="../_images/millis_py.jpeg" /></p>
+<p>Command case statement in Arduino:
+<img alt="" src="../_images/millis_ard.jpeg" /></p>
+</section>
+<section id="notification-handler">
+<h3>Notification Handler<a class="headerlink" href="#notification-handler" title="Link to this heading"></a></h3>
+<p>When the notify mechanism in BLE is enabled, the Artemis board automatically sends updated values to the computer without requiring explicit commands. The notification handler receives String values sent from the Artemis and extracts the time in the callback function.</p>
+<p><img alt="" src="../_images/task4_py.jpeg" /></p>
+</section>
+<section id="live-time-data">
+<h3>Live Time Data<a class="headerlink" href="#live-time-data" title="Link to this heading"></a></h3>
+<p>I wrote an Arduino loop to send 100 four-byte timestamps to measure the data transfer rate. In my notification handler, I stored the timestamps in an array and logged values in real-time for reference. To calculate the data rate, I used the first and last timestamp to determine the total transmission time.</p>
+<p><img alt="" src="../_images/GET_TIME.png" /></p>
+<p>Calculated data rate:
+<img alt="" src="../_images/data_rate_get.png" /></p>
+</section>
+<section id="send-time-data-command">
+<h3>SEND_TIME_DATA Command<a class="headerlink" href="#send-time-data-command" title="Link to this heading"></a></h3>
+<p>In Arduino, I defined a global array to store time stamps. In the SEND_TIME_DATA case statement, the array is populated with time stamps in the first loop. In the second loop, each element is sent an a String to my computer, where it is processed in Python by a notification handler like before.</p>
+<p><img alt="" src="../_images/send_time_data.jpeg" /></p>
+<p>The data rate for this batch transmission method is shown below.</p>
+<p><img alt="" src="../_images/second_method_rate.png" /></p>
+</section>
+<section id="get-temp-readings-command">
+<h3>GET_TEMP_READINGS Command<a class="headerlink" href="#get-temp-readings-command" title="Link to this heading"></a></h3>
+<p>In Arduino, I defined a second global array to store temperature readings. Each element in the timestamp array will store the time corresponding to its respective temperature reading in the temperature array. In the case statement, I followed the same framework as the SEND_TIME_DATA command. The first loop populates the arrays, while the second concurrently iterates through both arrays, sending corresponding timestamps and temperature readings together to Python.</p>
+<p><img alt="" src="../_images/get_temp_data.jpeg" /></p>
+<p>In Python, the notification handler parses the Strings, separating time and temperature values into two separate arrays.</p>
+<p><img alt="" src="../_images/temp_data_py.jpeg" /></p>
+</section>
+<section id="advantages-and-disadvantages-of-data-transmission-methods">
+<h3>Advantages and Disadvantages of Data Transmission Methods<a class="headerlink" href="#advantages-and-disadvantages-of-data-transmission-methods" title="Link to this heading"></a></h3>
+<p>The first method streams data for near real-time results but loses points when sensors outpace Bluetooth transmission, as observed in live data logs.The second method transmits data in complete batches, ensuring a higher data rate and preventing data loss.</p>
+<p>The Artemis board has 384 kB of RAM. Assuming each data point is 4 bytes if we send floats or ints, approximately 96,000 data points can be stored before running out of memory.</p>
+</section>
+<section id="effective-data-rate-and-overhead">
+<h3>Effective Data Rate and Overhead<a class="headerlink" href="#effective-data-rate-and-overhead" title="Link to this heading"></a></h3>
+<p>I measured and plotted the data rate for different packet sizes. The data rate ~21 bytes/sec for the 5 byte packet and ~479 bytes/sec for the 120 byte packet.</p>
+<p>Many short packets increase overhead because each has fixed overhead, resulting in less data per transmission. Larger packets reduce overhead by spreading it over more data, improving efficiency.</p>
+<p><img alt="" src="../_images/datarate_plot.png" /></p>
+</section>
+<section id="reliability">
+<h3>Reliability<a class="headerlink" href="#reliability" title="Link to this heading"></a></h3>
+<p>Sending data at a higher rate does not result in data loss. I sent large arrays with sequentially numbered element from Arduino and verified that all data points were received in Python.</p>
+</section>
+</section>
+<section id="discussion">
+<h2>Discussion<a class="headerlink" href="#discussion" title="Link to this heading"></a></h2>
+<p>In this lab, I gained an understanding of BLE and how to utilize BLE Arduino libraries for its implementation. I initially struggled with understanding the notification handler’s purpose, but realized it is useful for large datasets, eliminating the need for repeated commands to receive data points.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<p>I referred to Daria, Yiqi, and Nila’s pages for guidance on organizing my page content.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab1A/" class="btn btn-neutral float-left" title="Lab 1A: Artemis Board" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab2/" class="btn btn-neutral float-right" title="Lab 2: IMU" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

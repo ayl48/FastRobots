@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 9: Mapping &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 10: Grid Localization using Bayes Filter" href="../Lab10/" />
+    <link rel="prev" title="Lab 8: Stunts" href="../Lab8/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 9: Mapping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pi-orientation-control">PI Orientation Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mapping-at-designated-coordinates">Mapping at Designated Coordinates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#plots-for-position-3-2">Plots for Position (-3,-2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plots-for-position-5-3">Plots for Position (5,3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plots-for-position-0-3">Plots for Position (0,3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Plots for Position (5,-3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-precision">Mapping Precision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conversion-to-line-based-map">Conversion to Line-Based Map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 9: Mapping</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab9.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-9-mapping">
+<h1>Lab 9: Mapping<a class="headerlink" href="#lab-9-mapping" title="Link to this heading"></a></h1>
+<p>In Lab 9, I used my robot to build a map of a static room that can later support localization and navigation tasks in subsequent labs. The robot is placed at marked locations around the lab space (shown below), where it spins in place while simultaneously collecting time-of-flight sensor distance data.</p>
+<p><img alt="" src="../_images/habitat.jpeg" /></p>
+<section id="pi-orientation-control">
+<h2>PI Orientation Control<a class="headerlink" href="#pi-orientation-control" title="Link to this heading"></a></h2>
+<p>To help the robot overcome static friction while spinning in place, I applied tape to the wheels. I started with masking tape as a residue-free buffer, then added a layer of smooth duct tape on top to reduce friction and allow the wheels to rotate more easily.</p>
+<p><img alt="" src="../_images/tape_wheel1.jpeg" /></p>
+<p>I used my orientation PI control from Lab 6 to spin my robot on axis in 10-degree increments, pausing at each step to collect time-of-flight distance data before continuing until it completed a full rotation. I am using the DMP to measure the robot’s yaw.</p>
+<p>I organized my code using functions so that my <strong>MAP</strong> command code is more concise and easier to manage. The <strong>run_orientPI</strong> function executes the PI controller to reach a specified setpoint over a time interval.</p>
+<p><img alt="" src="../_images/run_orient.jpeg" /></p>
+<p>The <strong>pause</strong> function stops the robot and collects distance measurements for a time interval. The DMP’s range is -180 to 180 degrees so I convert the measured angle to a range of 0 to 360 to make later calculations easier.</p>
+<p><img alt="" src="../_images/pause.jpeg" /></p>
+<p>In my <strong>MAP</strong> command code, I use a for loop to increment the angles, running the orientation PID at each increment and pausing movement to take measurements. I run the orientation PID function for 1.2s for each increment so that it has plenty of time to reach the setpoint. Once it reaches the setpoint, it stops or pauses its rotation for 100 ms allowing adequate time for the ToF sensors to measure data without being affected by noise due to rotational movement.</p>
+<p><img alt="" src="../_images/map.jpeg" /></p>
+<p>This code performed reasonably well. When I plotted the expected and measured angles over time, the measured angle generally tracked the expected angle, even if it wasn’t a perfect match. Below is the graph for one of the data points. Note: The initial points near 360 degrees were a result of angle wrapping. I attempted to start the robot at 0 degrees, but it was challenging to align it perfectly.</p>
+<p><img alt="" src="../_images/time_angle_03.png" /></p>
+<p>The video below demonstrates my orientation PI control mapping code in action. As shown, the robot can spin on axis pretty well as it always remains in the 1 square foot tile. I think on average my error would be around 5 inches and maximally 10 inches when completing its spin.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lyClKZNKP94" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="mapping-at-designated-coordinates">
+<h2>Mapping at Designated Coordinates<a class="headerlink" href="#mapping-at-designated-coordinates" title="Link to this heading"></a></h2>
+<p>I executed a complete turn at the following marked coordinates in the lab space: (-3,-2), (5,3), (0,3), and (5,-3)</p>
+<p>The following code snippet shows an example of how I generated a polar plot. The polar plots allowed me to sanity check each mapping run to make sure I was capturing the general shape of the environment, though it is quite obvious there is noise from other cars and people stepping into the environment. False distances from the ToF sensor may have also contributed to some odd points.</p>
+<p><img alt="" src="../_images/polar_code.jpeg" /></p>
+<section id="plots-for-position-3-2">
+<h3>Plots for Position (-3,-2)<a class="headerlink" href="#plots-for-position-3-2" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/polar_n3n2.png" /></p>
+</section>
+<section id="plots-for-position-5-3">
+<h3>Plots for Position (5,3)<a class="headerlink" href="#plots-for-position-5-3" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/polar_53.png" /></p>
+</section>
+<section id="plots-for-position-0-3">
+<h3>Plots for Position (0,3)<a class="headerlink" href="#plots-for-position-0-3" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/polar_03.png" /></p>
+</section>
+<section id="id1">
+<h3>Plots for Position (5,-3)<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/polar_5n3.png" /></p>
+</section>
+<section id="mapping-precision">
+<h3>Mapping Precision<a class="headerlink" href="#mapping-precision" title="Link to this heading"></a></h3>
+<p>Ideally, I would have liked more time to graph additional runs. However, the limited open hours and the restriction on how many robots could map the environment at once made that difficult. In the tests I conducted, the data appeared to be fairly consistent. Here is data from one of my quick tests. The points are clustered rather closely in a similar pattern.</p>
+<p><img alt="" src="../_images/multiple_runs.jpeg" /></p>
+</section>
+</section>
+<section id="conversion-to-line-based-map">
+<h2>Conversion to Line-Based Map<a class="headerlink" href="#conversion-to-line-based-map" title="Link to this heading"></a></h2>
+<p>The following transformation matrix T is used to convert sensor data into Cartesian coordinates for mapping. The left part of T represents a rotation by angle ψ, and the rightmost column is a translation vector d. The original point P is transformed using P′ = T·P. Note: P must be expressed in homogeneous coordinates.
+<img alt="" src="../_images/eq.jpeg" /></p>
+<p>An example code snippet implementing the above for a coordinate location in the robot environment is shown. It is important to account for the ToF sensor offset from the robot’s spinning axis. Since my ToF sensor is centered and 50 mm away from the center, I add that to the x calculation. I also converted my distances from millimeters to feet since each tile represents one square foot and serves as the basis for the environment’s coordinate system.</p>
+<p><img alt="" src="../_images/transformation_code.jpeg" /></p>
+<p>To draw the line-based map manually, I wrote a draw_line function that draws a line between two coordinates. The coordinates for the lines are shown and will be entered into the simulator in the next lab. My map decently captures the general shape of the lab environment. However, there is a lot of noise captured as well. As said before, the noise could be due to false ToF sensor readings due to drastic movement and the other robots in the environment while mine was operating.</p>
+<p><img alt="" src="../_images/line_map_code.jpeg" /></p>
+<p><img alt="" src="../_images/line_map.png" /></p>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I referenced pages written by Wenyi, Daria, and Mikayla. I also worked with Becky and Akshati. Lastly, I used Professor Helbling’s transformation matrices slides.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab8/" class="btn btn-neutral float-left" title="Lab 8: Stunts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab10/" class="btn btn-neutral float-right" title="Lab 10: Grid Localization using Bayes Filter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

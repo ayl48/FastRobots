@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 8: Stunts &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 9: Mapping" href="../Lab9/" />
+    <link rel="prev" title="Lab 7: Kalman Filter" href="../Lab7/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 8: Stunts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#flip-implementation">Flip Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flip-videos">Flip Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#flip-run-1">Flip Run 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flip-run-2">Flip Run 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flip-run-3">Flip Run 3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bloopers">Bloopers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 8: Stunts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab8.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-8-stunts">
+<h1>Lab 8: Stunts<a class="headerlink" href="#lab-8-stunts" title="Link to this heading"></a></h1>
+<p>In this lab, the robot begins on a starting line 1.5 m away from the wall, moves forward until it is ~1ft from the wall, performs a flip, and then drives back through the starting line.</p>
+<p>Note: In previous years, students were required to perform the stunt on the lab track. However, since this lab coincided with spring break, Professor Helbling allowed us to complete it at home instead.</p>
+<section id="flip-implementation">
+<h2>Flip Implementation<a class="headerlink" href="#flip-implementation" title="Link to this heading"></a></h2>
+<p>Although linear PID could have been used for this stunt, I opted for open-loop control. I programmed the robot to accelerate forward at full speed, then immediately reverse at full speed to build the momentum needed for the flip. After the flip, the robot is inverted, so to make it move forward and return to the starting line, I still issue the backward command and use a lower PWM. Additionally, my lab 4 component layout decision of placing both batteries at the front of the car provided a forward weight distribution, which made the open-loop flip effective.</p>
+<p>On the Arduino side, I wrote a Bluetooth FLIP command that executes the flip stunt and allows me to adjust the open-loop parameters in each run until I found ones that worked. After testing, I finalized the open-loop parameters that consistently produced reliable results and used the same ones for each run in the command call from my Python script.</p>
+<p><strong>Arduino Code:</strong>
+<img alt="" src="../_images/ard_1.jpeg" />
+<img alt="" src="../_images/ard_2.jpeg" />
+<img alt="" src="../_images/ard_3.jpeg" /></p>
+<p>Helper Function For Storing data:
+<img alt="" src="../_images/helper.jpeg" /></p>
+<p><strong>Python Command:</strong>
+<img alt="" src="../_images/python_command.jpeg" /></p>
+</section>
+<section id="flip-videos">
+<h2>Flip Videos<a class="headerlink" href="#flip-videos" title="Link to this heading"></a></h2>
+<section id="flip-run-1">
+<h3>Flip Run 1<a class="headerlink" href="#flip-run-1" title="Link to this heading"></a></h3>
+<p><strong>Stunt Completion Time:</strong> 1.93s</p>
+<p><img alt="" src="../_images/Flip1.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XyZOh4HU9a8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="flip-run-2">
+<h3>Flip Run 2<a class="headerlink" href="#flip-run-2" title="Link to this heading"></a></h3>
+<p><strong>Stunt Completion Time:</strong> 2.08s</p>
+<p><img alt="" src="../_images/Flip2.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IG5O3Za6K4k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="flip-run-3">
+<h3>Flip Run 3<a class="headerlink" href="#flip-run-3" title="Link to this heading"></a></h3>
+<p><strong>Stunt Completion Time:</strong> 2.00s</p>
+<p><img alt="" src="../_images/Flip3.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H5lXT2y9cxg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<hr class="docutils" />
+<p>Note: In all the demo graphs, the data for the return trip after the flip are inaccurate because there is a window that reaches down to the ground behind my setup (picture shown below). I figured the return data, was not important since the robot just needed to cross the line to finish the stunt and I used open loop all the way through. If I needed more accurate return data, I would have bought another poster board.</p>
+<p><img alt="" src="../_images/Window.jpg" /></p>
+</section>
+</section>
+<section id="bloopers">
+<h2>Bloopers<a class="headerlink" href="#bloopers" title="Link to this heading"></a></h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PDJ9GCCFWjM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I referenced Wenyi’s page. I discussed ideas with Becky and Akshati.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab7/" class="btn btn-neutral float-left" title="Lab 7: Kalman Filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab9/" class="btn btn-neutral float-right" title="Lab 9: Mapping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

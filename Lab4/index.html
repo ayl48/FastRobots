@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 4: Motors and Open Loop Control &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 5: Linear PID Control and Linear Interpolation" href="../Lab5/" />
+    <link rel="prev" title="Lab 3: Time of Flight Sensors" href="../Lab3/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 4: Motors and Open Loop Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prelab">Prelab</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wiring-diagram">Wiring Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-tasks">Lab Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#motor-driver-pwm-test">Motor Driver PWM Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1"></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wheels-spinning-on-each-side">Wheels Spinning On Each Side</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#all-wheels-spinning">All Wheels Spinning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#secured-car-components">Secured Car Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#motor-functions">Motor Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lower-limit-pwm-value-to-start-movement">Lower Limit PWM Value to Start Movement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calibration-for-straight-line-movement">Calibration For Straight Line Movement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#open-loop-control-sequence">Open Loop Control Sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frequency-discussion-for-analogwrite">Frequency Discussion for analogWrite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lower-limit-pwm-value-for-motion-maintenance">Lower Limit PWM Value for Motion Maintenance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 4: Motors and Open Loop Control</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab4.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-4-motors-and-open-loop-control">
+<h1>Lab 4: Motors and Open Loop Control<a class="headerlink" href="#lab-4-motors-and-open-loop-control" title="Link to this heading"></a></h1>
+<section id="prelab">
+<h2>Prelab<a class="headerlink" href="#prelab" title="Link to this heading"></a></h2>
+<section id="wiring-diagram">
+<h3>Wiring Diagram<a class="headerlink" href="#wiring-diagram" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/lab4_motor_wiring.jpg" /></p>
+<p>I used pins A0-A3 on the Artemis to control the motors. The Artemis and the motors will be powered by separate batteries because the motors draw large currents, generating noise and inductive spikes when switched on and off.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="lab-tasks">
+<h2>Lab Tasks<a class="headerlink" href="#lab-tasks" title="Link to this heading"></a></h2>
+<section id="motor-driver-pwm-test">
+<h3>Motor Driver PWM Test<a class="headerlink" href="#motor-driver-pwm-test" title="Link to this heading"></a></h3>
+<p>The motor driver circuit’s operating voltage is 2.7-10.8VDC according to the <a class="reference external" href="https://www.pololu.com/product-info-merged/2130">datasheet</a>. The battery provided for the car is 3.7 V so I figured that would be a reasonable voltage for the power supply setting.
+<img alt="" src="../_images/powersupply.jpg" /></p>
+<p>I used analogWrite commands to generate PWM signals on the motor driver inputs and scoped the outputs.</p>
+</section>
+</section>
+<section id="id1">
+<h2><img alt="" src="../_images/pwm_code.jpg" /><a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><img alt="" src="../_images/full_setup.jpg" />
+<img alt="" src="../_images/connections.jpg" /></p>
+<p>The output signal has a 3.7V amplitude, matching the power supply. This was consistent across all output pins on both drivers. An example oscilloscope image of one of the outputs is shown.</p>
+<p><img alt="" src="../_images/oscilloscope.jpg" /></p>
+<hr class="docutils" />
+<section id="wheels-spinning-on-each-side">
+<h3>Wheels Spinning On Each Side<a class="headerlink" href="#wheels-spinning-on-each-side" title="Link to this heading"></a></h3>
+<p>After scoping the outputs, I soldered the motor drivers to the motors and tested each one.</p>
+<p><img alt="" src="../_images/wheels_code_snippet1.jpg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gqHCjJhukT0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<hr class="docutils" />
+<p><img alt="" src="../_images/wheels_code_snippet2.jpg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sWNrK5JfFV4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="all-wheels-spinning">
+<h3>All Wheels Spinning<a class="headerlink" href="#all-wheels-spinning" title="Link to this heading"></a></h3>
+<p>After confirming my motor drivers worked with the power supply, I switched to battery power and verified that all wheels can spin simultaneously.</p>
+<p><img alt="" src="../_images/all_wheels_code.jpg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O3TMd0nXmHE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="secured-car-components">
+<h3>Secured Car Components<a class="headerlink" href="#secured-car-components" title="Link to this heading"></a></h3>
+<p>Next, I secured the components into the car as shown.
+<img alt="" src="../_images/Artemis_Top.jpg" /></p>
+<p><img alt="" src="../_images/battery_top.jpg" /></p>
+<p>I used duct tape to create straps that further secured the components by pressing the sticky sides together, leaving the ends adhesive for attachment.
+<img alt="" src="../_images/artemis_tape.jpg" /></p>
+<p><img alt="" src="../_images/battery_tape.jpg" /></p>
+</section>
+<hr class="docutils" />
+<section id="motor-functions">
+<h3>Motor Functions<a class="headerlink" href="#motor-functions" title="Link to this heading"></a></h3>
+<p>Rather than repeatedly using analogWrite in my code, I created separate motor functions for stopping, moving forward, moving backward, and turning for both the left and right motors. I then combined these functions to control the car’s overall movement in different directions. (Note: The cal_factor will be explained in a later section. For now, assume it is 1 in the following section, as calibration has not been performed yet.)</p>
+<p><img alt="" src="../_images/motor_functions1.jpg" />
+<img alt="" src="../_images/motor_functions2.jpg" /></p>
+</section>
+<hr class="docutils" />
+<section id="lower-limit-pwm-value-to-start-movement">
+<h3>Lower Limit PWM Value to Start Movement<a class="headerlink" href="#lower-limit-pwm-value-to-start-movement" title="Link to this heading"></a></h3>
+<p>I wrote simple bluetooth commands to be able to easily set the PWM value, start, and stop my robot from my computer. I determined the lower limit PWM values for moving forward and turning from rest. Below this limit, the car would jerk without moving, as the force generated wasn’t enough to overcome static friction. Above the limit, the car would take some time to generate the necessary force and begin moving.</p>
+<p><img alt="" src="../_images/low_pwm_py.jpg" />
+<img alt="" src="../_images/Low_pwm_code.jpg" /></p>
+<p>The lower limit PWM value to move the car forward from rest is 40.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RK-kr2esMf0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>The lower limit value to turn the car from rest is 100.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YSZ5fRW4pGQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="calibration-for-straight-line-movement">
+<h3>Calibration For Straight Line Movement<a class="headerlink" href="#calibration-for-straight-line-movement" title="Link to this heading"></a></h3>
+<p>Since the right motor is more powerful and has less internal friction than the left, I edited my motor functions to apply a 1.52 calibration factor to the left side to ensure straight movement.</p>
+<p><img alt="" src="../_images/cal_factor_ard1.jpg" /></p>
+<p><img alt="" src="../_images/cal_factor_ard2.jpg" /></p>
+<p>This factor was determined experimentally by using my bluetooth command SET_CALIBRATION which is shown.</p>
+<p><img alt="" src="../_images/SET_CALIBRATION.jpg" /></p>
+<p>Once I calibrated the left motor, I was able to get my robot to move in a straight line for 6ft (~1.83m).</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MOosLSU_nTk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="open-loop-control-sequence">
+<h3>Open Loop Control Sequence<a class="headerlink" href="#open-loop-control-sequence" title="Link to this heading"></a></h3>
+<p>After verifying that my robot was able to move in a straight line, I wrote an open loop control program.
+<img alt="" src="../_images/open_loop.jpg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qxFuCmpnBeI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+___
+</section>
+<section id="frequency-discussion-for-analogwrite">
+<h3>Frequency Discussion for analogWrite<a class="headerlink" href="#frequency-discussion-for-analogwrite" title="Link to this heading"></a></h3>
+<p>Using the oscilloscope picture from earlier, I estimate the frequency of analogWrite to be approximately 267Hz. According to Arduino documentation, microcontrollers typically operate at PWM frequencies of 490Hz, although the specific frequency for the Artemis Nano is not mentioned.</p>
+<p>For controlling our inexpensive motors, this frequency is sufficient since very high precision and smooth control are not critical. However, at lower PWM frequencies, noise and vibrations tend to increase. By manually configuring the PWM frequency, these issues can be alleviated, resulting in quieter operation and potentially smoother control.</p>
+</section>
+<hr class="docutils" />
+<section id="lower-limit-pwm-value-for-motion-maintenance">
+<h3>Lower Limit PWM Value for Motion Maintenance<a class="headerlink" href="#lower-limit-pwm-value-for-motion-maintenance" title="Link to this heading"></a></h3>
+<p>To determine the lower limit PWM value for maintaining motion after overcoming static friction, I created the following command. I began with the value for moving from rest and gradually decreased it in the loop until the robot stopped, identifying the lower limit for sustained movement. Bluetooth was used to send a 1 or 0, making it easier to switch between testing for sustained forward movement and turning. Each time the PWM value was decremented, the Artemis blinked, and I counted the blinks, observing when the car stopped to identify the corresponding PWM value.
+<img alt="" src="../_images/PWM_MOTION_py.jpg" />
+<img alt="" src="../_images/PWM_MOTION.jpg" /></p>
+<p>The lower limit PWM value to maintain the car’s forward motion is 39.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PJNcoqZsU2c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>The lower limit PWM value to maintain the car’s turning motion is 95.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5Ax-QaCJIuw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</section>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I referenced Nila’s and Wenyi’s pages. I also discussed ideas with Becky.
+Sources for analogWrite frequency discussion: <a class="reference external" href="https://learn.adafruit.com/improve-brushed-dc-motor-performance/pwm-frequency">Improve Brushed DC Motor Performance: PWM Frequency</a> and <a class="reference external" href="https://www.arduino.cc/reference/tr/language/functions/analog-io/analogwrite/">Arduino - analogWrite()</a>
+.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab3/" class="btn btn-neutral float-left" title="Lab 3: Time of Flight Sensors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab5/" class="btn btn-neutral float-right" title="Lab 5: Linear PID Control and Linear Interpolation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

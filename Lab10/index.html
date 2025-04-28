@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 10: Grid Localization using Bayes Filter &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 11: Localization on the Real Robot" href="../Lab11/" />
+    <link rel="prev" title="Lab 9: Mapping" href="../Lab9/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 10: Grid Localization using Bayes Filter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-code">Simulation Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compute-control-function">compute_control function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#odom-motion-model">odom_motion_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prediction-step">prediction_step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensor-model">sensor_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-step">update_step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-results">Simulation Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#localization-without-bayes-filter">Localization Without Bayes Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#localization-with-bayes">Localization With Bayes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 10: Grid Localization using Bayes Filter</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab10.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-10-grid-localization-using-bayes-filter">
+<h1>Lab 10: Grid Localization using Bayes Filter<a class="headerlink" href="#lab-10-grid-localization-using-bayes-filter" title="Link to this heading"></a></h1>
+<p>In this lab, I simulate grid localization using the Bayes filter algorithm in Python. Grid localization is the process of determining the position of a mobile robot within a known map of its environment that has been divided into a grid.</p>
+<p>I use a Gaussian Distribution to model the measurement noise, which can be thought of as a simplified Beam model where noise from failures, unexpected objects, and random measurements are omitted. I use the odometry motion model with the Gaussian noise model and record data before and after each movement. The relative motion parameters are described by variables rotation1, translation, and rotation2. Using the Bayes filter algorithm, I can localize the robot. There are two steps: a prediction step to incorporate control input data (movement) and an update step to incorporate observation data (measurement).</p>
+<section id="simulation-code">
+<h2>Simulation Code<a class="headerlink" href="#simulation-code" title="Link to this heading"></a></h2>
+<section id="compute-control-function">
+<h3>compute_control function<a class="headerlink" href="#compute-control-function" title="Link to this heading"></a></h3>
+<p>The compute_control function computes the odometry model parameters shown below from Professor Helbling’s slides) and computes control input u given the pervious pose at time t-1 and current pose at time t.
+<img alt="" src="../_images/odometry_slide.jpeg" /></p>
+<p>The model parameters in the Python code delta_rot_1, delta_trans, and delta_rot_2 are computed from the current and previous poses passed into the function.</p>
+<p><img alt="" src="../_images/compute_control.jpeg" /></p>
+</section>
+<section id="odom-motion-model">
+<h3>odom_motion_model<a class="headerlink" href="#odom-motion-model" title="Link to this heading"></a></h3>
+<p>The odom_motion_model function calculates the probability of the robot transitioning from the previous pose to the current pose by plugging in The actual and modeled control inputs into a Gaussian function.</p>
+<p><img alt="" src="../_images/odom_eq.jpeg" /></p>
+<p><img alt="" src="../_images/odom.jpeg" /></p>
+</section>
+<section id="prediction-step">
+<h3>prediction_step<a class="headerlink" href="#prediction-step" title="Link to this heading"></a></h3>
+<p>The prediction_step function simply implements the prediction step of the Bayes Filter Algorithm. The previous functions are used to support the implementation. It uses the current and previous odometry readings and motion model parameters to predict the robot’s new belief. This is done by looping through all possible previous and current pose combinations and calling odom_motion_model to compute probabilities that are accumulated and normalized to add up to 1. To speed up this computationally intensive process, only probabilities over 0.0001 contribute to the belief. The tradeoff is that we lose a bit of accuracy.</p>
+<p><img alt="" src="../_images/bayes.jpeg" /></p>
+<p><img alt="" src="../_images/prediction.jpeg" /></p>
+</section>
+<section id="sensor-model">
+<h3>sensor_model<a class="headerlink" href="#sensor-model" title="Link to this heading"></a></h3>
+<p>The sensor_model function calculates the likelihood of each observation based on a Gaussian distribution.
+<img alt="" src="../_images/sensor_model.jpeg" /></p>
+</section>
+<section id="update-step">
+<h3>update_step<a class="headerlink" href="#update-step" title="Link to this heading"></a></h3>
+<p>The update_step function performs the update step of the Bayes filter by multiplying the measurement probability with the predicted belief to get the belief.</p>
+<p><img alt="" src="../_images/bayes.jpeg" /></p>
+<p><img alt="" src="../_images/update.jpeg" /></p>
+</section>
+</section>
+<section id="simulation-results">
+<h2>Simulation Results<a class="headerlink" href="#simulation-results" title="Link to this heading"></a></h2>
+<p>In the simulation plots, the odometry model is plotted in red, ground truth in green, and belief in blue (only shown for localization with Bayes). As shown in the video below, the odometry model alone is pretty inadequate as points are drawn outside the map boundary. When we add the Bayes filter to the localization simulation, we can see that the belief approximates the robot’s true position very well as it tracks the ground truth plot.</p>
+<section id="localization-without-bayes-filter">
+<h3>Localization Without Bayes Filter<a class="headerlink" href="#localization-without-bayes-filter" title="Link to this heading"></a></h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/smKoO4KSoWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<section id="localization-with-bayes">
+<h3>Localization With Bayes<a class="headerlink" href="#localization-with-bayes" title="Link to this heading"></a></h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tBCk44oePKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I referenced pages written by Daria, Mikayla, and Stephan. I also referenced Professor Helbling’s and Professor Peterson’s slides. Lastly, I discussed ideas with Becky and Akshati.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab9/" class="btn btn-neutral float-left" title="Lab 9: Mapping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab11/" class="btn btn-neutral float-right" title="Lab 11: Localization on the Real Robot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

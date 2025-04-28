@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 3: Time of Flight Sensors &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 4: Motors and Open Loop Control" href="../Lab4/" />
+    <link rel="prev" title="Lab 2: IMU" href="../Lab2/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 3: Time of Flight Sensors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prelab">Prelab</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sensor-placement">Sensor Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wiring-diagram">Wiring Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-tasks">Lab Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#artemis-scanning-for-i2c-devices">Artemis Scanning for I2C Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensor-data-for-selected-distance-mode">Sensor Data for Selected Distance Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tof-sensor-speed">ToF Sensor Speed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#two-tof-sensors-and-imu-working-in-parallel">Two ToF Sensors and IMU Working in Parallel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#time-vs-distance">Time Vs. Distance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#time-vs-angle">Time Vs. Angle</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#infrared-transmission-based-sensor-discussion">Infrared Transmission Based Sensor Discussion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensitivity-to-colors-and-textures">Sensitivity to Colors and Textures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 3: Time of Flight Sensors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab3.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-3-time-of-flight-sensors">
+<h1>Lab 3: Time of Flight Sensors<a class="headerlink" href="#lab-3-time-of-flight-sensors" title="Link to this heading"></a></h1>
+<section id="prelab">
+<h2>Prelab<a class="headerlink" href="#prelab" title="Link to this heading"></a></h2>
+<p><strong>I²C address from <a class="reference external" href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">datasheet</a>:</strong> 0x52</p>
+<p>Since the I²C address is hardwired and both ToF sensors share the same address, I cannot address them individually without modifications. I wrote the second sensor’s shutdown pin (XSHUT) low to disable it, changed the address of the first sensor, and then re-enabled the second sensor again to avoid address conflicts since they share the same bus.</p>
+<p>Definitions:
+<img alt="" src="../_images/Tof_object.jpeg" /></p>
+<p>Setup function:
+<img alt="" src="../_images/Tof_setup.jpeg" /></p>
+<section id="sensor-placement">
+<h3>Sensor Placement<a class="headerlink" href="#sensor-placement" title="Link to this heading"></a></h3>
+<p>I will mount one sensor on the front and another at a right angle on the side to expand the field of view, enhance depth perception, and improve multi-directional object detection.</p>
+<p><img alt="" src="../_images/sensor_placement.jpeg" /></p>
+</section>
+<section id="wiring-diagram">
+<h3>Wiring Diagram<a class="headerlink" href="#wiring-diagram" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/ToFLab3Schematic.jpg" /></p>
+</section>
+</section>
+<section id="lab-tasks">
+<h2>Lab Tasks<a class="headerlink" href="#lab-tasks" title="Link to this heading"></a></h2>
+<p>The ToF sensors are connected as shown below. The Artemis board can be powered with a battery.
+<img alt="" src="../_images/physical_hookup.jpg" /></p>
+<section id="artemis-scanning-for-i2c-devices">
+<h3>Artemis Scanning for I2C Devices<a class="headerlink" href="#artemis-scanning-for-i2c-devices" title="Link to this heading"></a></h3>
+<p><img alt="" src="../_images/i2c_scan.jpeg" />
+The scanned address in the serial monitor does not match the datasheet because it shows only the part of the address that identifies the device, excluding the LSB, which indicates read/write.</p>
+</section>
+<section id="sensor-data-for-selected-distance-mode">
+<h3>Sensor Data for Selected Distance Mode<a class="headerlink" href="#sensor-data-for-selected-distance-mode" title="Link to this heading"></a></h3>
+<p>I opted for the short-distance mode for the ToF sensors due because of its resolution at shorter distances and sufficient 1.3m range for the robot’s navigation. It is also more immune to ambient light interference. In contrast, the long-distance mode can measure up to 4m but showed reduced accuracy under the bright lab lights during testing.</p>
+<p>As demonstrated in the graph below, the sensor exhibits high accuracy and precision overall. However, for distances within a few centimeters, the ToF sensor shows the lowest precision and repeatability, as well as reduced accuracy. The sensor performs best in terms of accuracy and precision at distances around half a meter, where the measurements are also the most repeatable. As we approach the limits of its range, its accuracy decreases once more.</p>
+<p><img alt="" src="../_images/sensor_accuracy.jpeg" /></p>
+<p><img alt="" src="../_images/sensor_precision.jpeg" /></p>
+<p>I thought that accuracy and variation would be improved as ranging time increased. However, in my results, I got the best measurement at 50ms.
+<img alt="" src="../_images/ranging_time.jpeg" /></p>
+</section>
+<section id="tof-sensor-speed">
+<h3>ToF Sensor Speed<a class="headerlink" href="#tof-sensor-speed" title="Link to this heading"></a></h3>
+<p>The code below outputs the Artemis clock to the Serial monitor and updates the ToF sensor data only when new data is available. Each loop iteration took 6 or 7 ms which is very fast. I expected some iterations to lack data, leading to a time difference between printing the timestamp alone and printing it with the data. I would assume the limiting factor would be due to the sensor measurements because the datasheet says they sample at 50Hz.</p>
+<p><img alt="" src="../_images/speed_code.jpeg" /></p>
+<p><img alt="" src="../_images/speed_outputs.jpeg" /></p>
+</section>
+<section id="two-tof-sensors-and-imu-working-in-parallel">
+<h3>Two ToF Sensors and IMU Working in Parallel<a class="headerlink" href="#two-tof-sensors-and-imu-working-in-parallel" title="Link to this heading"></a></h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PlbhDfo0RSo" frameborder="0" allowfullscreen></iframe>
+<p><img alt="" src="../_images/parallel_data.jpeg" /></p>
+<section id="time-vs-distance">
+<h4>Time Vs. Distance<a class="headerlink" href="#time-vs-distance" title="Link to this heading"></a></h4>
+<p><img alt="" src="../_images/time_distance.jpeg" /></p>
+</section>
+<section id="time-vs-angle">
+<h4>Time Vs. Angle<a class="headerlink" href="#time-vs-angle" title="Link to this heading"></a></h4>
+<p>The IMU was kept still.</p>
+<p><img alt="" src="../_images/time_angle.jpeg" /></p>
+</section>
+</section>
+<section id="infrared-transmission-based-sensor-discussion">
+<h3>Infrared Transmission Based Sensor Discussion<a class="headerlink" href="#infrared-transmission-based-sensor-discussion" title="Link to this heading"></a></h3>
+<p>In addition to time-of-flight sensors, LiDAR and IR proximity sensors also rely on infrared transmission. LiDAR uses IR lasers to send pulses and measure return time. It is long range (meters to kilometers) and very precise and accurate, but more expensive and power-intensive. ToF sensors use IR LEDs or lasers and measure the time delay of reflected light which is suitable for medium ranges (centimeters to meters). They offer moderate accuracy and lower resolution than LiDAR, typically performing best at the centimeter scale. IR proximity sensors use IR LEDs to measure the reflected IR intensity. This is more suitable for short-range applications (a few centimeters to a meter) and cost-effective presence detection. They are not ideal for distance measurements because the reflected intensity varies with material properties.</p>
+</section>
+<section id="sensitivity-to-colors-and-textures">
+<h3>Sensitivity to Colors and Textures<a class="headerlink" href="#sensitivity-to-colors-and-textures" title="Link to this heading"></a></h3>
+<p>I tested the ToF sensor’s sensitivity to colors and textures by measuring distances at a fixed point with various materials.</p>
+<p><img alt="" src="../_images/color_plot.jpeg" /></p>
+<p>I anticipated that the distance measured with the white cardboard would produce the most accurate result, but it appears that the reflectivity of the green plastic was better despite its color. It’s worth noting that the texture of the cardboard might also absorb some light, counteracting the reflective qualities of white. As expected, the black leather provided the least accurate measurement because its color is light-absorbing. I was surprised that fleece, with its inconsistent surface texture that can create variable reflections, performed second best.</p>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<p>I referenced Wenyi’s and Nila’s pages for formatting content. I also discussed ideas with Becky.
+Sensor comparison sources:<a class="reference external" href="https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors">Link1</a>, <a class="reference external" href="https://pmt-fl.com/time-of-flight-sensor-vs-lidar-what-are-the-differences/">Link2</a>, <a class="reference external" href="https://www.spatialpost.com/lidar-vs-tof-time-of-flight-sensors/">Link3</a>, <a class="reference external" href="https://www.sony-semicon.com/en/technology/industrytof.html#:~:text=ToF%20depth%20sensors%20measure%20the,time%20elapsed%20between%20the%20two.">Link4</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab2/" class="btn btn-neutral float-left" title="Lab 2: IMU" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab4/" class="btn btn-neutral float-right" title="Lab 4: Motors and Open Loop Control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

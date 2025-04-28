@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 5: Linear PID Control and Linear Interpolation &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 6: Orientation Control" href="../Lab6/" />
+    <link rel="prev" title="Lab 4: Motors and Open Loop Control" href="../Lab4/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 5: Linear PID Control and Linear Interpolation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prelab">Prelab</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bluetooth-commands">Bluetooth Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pi-discussion-and-implementation">PI Discussion and Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-tasks">Lab Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#position-control">Position Control</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#proportional-p-control">Proportional (P) Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proportional-integral-pi-control">Proportional Integral (PI) Control</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#extrapolation">Extrapolation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extrapolation-using-previous-datapoint">Extrapolation Using Previous Datapoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linear-interpolation">Linear Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#wind-up-protection-for-integrator">Wind-Up Protection for Integrator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#no-wind-up-protection">No Wind-up Protection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wind-up-protection">Wind-Up Protection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 5: Linear PID Control and Linear Interpolation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab5.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-5-linear-pid-control-and-linear-interpolation">
+<h1>Lab 5: Linear PID Control and Linear Interpolation<a class="headerlink" href="#lab-5-linear-pid-control-and-linear-interpolation" title="Link to this heading"></a></h1>
+<section id="prelab">
+<h2>Prelab<a class="headerlink" href="#prelab" title="Link to this heading"></a></h2>
+<p>I began by separating my previous lab code for motor control and ToF into header and CPP files to improve code organization. Additionally, I created a new header file specifically for my PID control functions. Due to time constraints, I have not yet created a header file for my IMU code. The header files are shown below.</p>
+<p>Motor header file:
+<img alt="" src="../_images/motor_header.jpeg" /></p>
+<p>ToF header file:
+<img alt="" src="../_images/ToF_header.jpeg" /></p>
+<p><img alt="" src="../_images/PID_header.jpg" /></p>
+<section id="bluetooth-commands">
+<h3>Bluetooth Commands<a class="headerlink" href="#bluetooth-commands" title="Link to this heading"></a></h3>
+<p>Next, I wrote Bluetooth commands to set parameters and control the start and stop of my PID code from my computer.</p>
+<p>The <strong>SET_PID_PARAM</strong> command sets PI parameters (Kp and Ki) and activates a tweak flag, which adjusts the PI calculation. This adjustment is discussed later in the implementation.</p>
+<p>Arduino side:
+<img alt="" src="../_images/SET_PID_PARAM.jpeg" /></p>
+<p>Python side:
+<img alt="" src="../_images/SET_PID_py.jpeg" /></p>
+<p>The <strong>SET_CONSTRAINT</strong> allows me to choose PWM value limits to cap speed and prevent the robot from hitting the wall too hard. I can also set the flag for clamp here which turns on and off clamping for wind-up protection.</p>
+<p>Arduino side:
+<img alt="" src="../_images/SET_CONSTRAINT.jpeg" /></p>
+<p>Python side:
+<img alt="" src="../_images/SET_CON_py.jpeg" /></p>
+<p>The <strong>START_RUN</strong> command allows me to set the target distance (setpoint) and PID runtime, then executes PI control for the specified duration. It sends timestamped data, including distances, PWM values, P terms, and I terms, to the computer afterward for plotting. The PI implementation will be discussed further in the implementation section.</p>
+<p>Arduino side:
+<img alt="" src="../_images/START_RUN_ard.jpg" />
+<img alt="" src="../_images/START_RUN_ard1.jpg" />
+<img alt="" src="../_images/START_RUN_ard2.jpg" /></p>
+<p>Python side:
+<img alt="" src="../_images/notif.jpeg" /></p>
+<p><img alt="" src="../_images/START_RUN_py.jpg" /></p>
+<p>I also implement a hard stop in the main loop if the Bluetooth connection fails as safety measure.
+<img alt="" src="../_images/hard_stop.jpg" /></p>
+</section>
+<section id="pi-discussion-and-implementation">
+<h3>PI Discussion and Implementation<a class="headerlink" href="#pi-discussion-and-implementation" title="Link to this heading"></a></h3>
+<p>The PID equation and block digram from Professor Helbling’s slides are shown.
+<img alt="" src="../_images/PID_equation.jpeg" />
+<img alt="" src="../_images/PID_diagram.jpeg" /></p>
+<p>In essence, the PID control equation combines three components to adjust a system’s behavior. The Proportional term responds to the current error, the Integral term accounts for past errors to eliminate steady-state error, and the Derivative term predicts future errors based on the rate of change. Together, these components work to minimize error and improve system stability and accuracy.</p>
+<p>I implemented only PI control because, through experimentation, I found it sufficient to make the robot stop 1 foot away from the wall. The P term provided effective control, while the I term helped with fine-tuning the small and persistent errors. There are no substantial fluctuations or fast changes in the system that would necessitate the D term, particularly since there is no speed requirement for this lab.</p>
+<p>In the START_RUN function, I use a while loop to implement PI control for the desired duration, ensuring ample data storage with arrays. I compute the time step (dt) for the integral control and then update the PI values using the linear_pid function, provided the ToF sensor has data.At the end of the loop, I manage forward and backward movement based on the sign of the adjusted PWM value from the PI calculation.</p>
+<p><img alt="" src="../_images/START_RUN_ard1.jpg" /></p>
+<p>In my <strong>linear_pid</strong> function, I implement PI according to the equation. I also apply a tweak to the PID control when the flag is activated. This tweak takes a sliding average of the last five errors and checks if it is less than 50mm. If it is, the PWM value is set to 0, stopping the car. This ensures the car stops just before reaching its target distance, giving it enough time to come to a complete stop by the time it reaches the target. While the PID control equation should theoretically work as shown in the slides, in practice, this adjustment is necessary because my motors are imperfect.</p>
+<p>I also include my clamping code for wind-up protection in my linear_pid function. The clamp flag, activated in SET_CONSTRAINT, controls the conditional that encompasses the clamping code.</p>
+<p><img alt="" src="../_images/lin_pid.jpg" />
+<img alt="" src="../_images/helper_function.jpeg" /></p>
+</section>
+</section>
+<section id="lab-tasks">
+<h2>Lab Tasks<a class="headerlink" href="#lab-tasks" title="Link to this heading"></a></h2>
+<section id="position-control">
+<h3>Position Control<a class="headerlink" href="#position-control" title="Link to this heading"></a></h3>
+<section id="proportional-p-control">
+<h4>Proportional (P) Control<a class="headerlink" href="#proportional-p-control" title="Link to this heading"></a></h4>
+<p>First, I implemented proportional control. I started with an estimate by calculating the following:
+<img alt="" src="../_images/kp_estimate.jpg" />.
+I rearranged the equation for PWM control and estimated Kp using the maximum PWM I allowed and the maximum error, based on the ToF sensor’s 4m range.As always, the theoretical value requires adjustment to be suitable for practical application. I ended up tweaking this value to be lower through experimentation.</p>
+<p>Kp = 0.04.</p>
+<p><img alt="" src="../_images/p_distance.jpeg" />
+<img alt="" src="../_images/p_pwm.jpeg" />
+<img alt="" src="../_images/p_pterm.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6NMo0ybRPp8"
+    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+</iframe>
+</section>
+<hr class="docutils" />
+<section id="proportional-integral-pi-control">
+<h4>Proportional Integral (PI) Control<a class="headerlink" href="#proportional-integral-pi-control" title="Link to this heading"></a></h4>
+<p>After finding Kp, I loosely followed heuristic 1 in the slides and increased Ki until overshoot and then slowly reduced the Ki until it was gone. I primarily looked at the car’s ability to reach the 1-foot mark with precision and accuracy, using this as a key indicator of effective tuning. I did end up lowering Kp as well after experimenting with the values further through trial and error.</p>
+<p>PI control without clamping: Kp = 0.032 and Ki = 0.01</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/x92iKCiqwtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p><img alt="" src="../_images/pi_noclamp_distance.jpeg" />
+<img alt="" src="../_images/pi_noclamp_pwm.jpeg" />
+<img alt="" src="../_images/pi_noclamp_pterm.jpeg" />
+<img alt="" src="../_images/pi_noclamp_iterm.jpeg" /></p>
+<p>Two other runs of my PI control are shown.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TsQqXjffLiI" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/44w_pQgWc-4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+</section>
+<hr class="docutils" />
+<section id="extrapolation">
+<h3>Extrapolation<a class="headerlink" href="#extrapolation" title="Link to this heading"></a></h3>
+<p>Using the same methods from previous labs, I calculated the frequency at which the ToF sensor returns new data: ~9.94 Hz. This is very slow, but no matter how much I shortened the sensor’s time budget, I could not get a faster frequency. I will need to look deeper into this.
+<img alt="" src="../_images/10Hz.jpeg" /></p>
+<p>After decoupling the ToF frequency from the PID loop by running the loop regardless of , I calculated the PID loop frequency to be ~121.25 Hz. To decouple the frequencies, I made the loop frequency dependent on the PID calculation rather than the sensor updates. When new ToF data is available, I updated the motor speed estimate; otherwise, I used the last saved value for PID calculations. This maintained continuous control without being constrained by the sensor’s update rate.</p>
+<section id="extrapolation-using-previous-datapoint">
+<h4>Extrapolation Using Previous Datapoint<a class="headerlink" href="#extrapolation-using-previous-datapoint" title="Link to this heading"></a></h4>
+<p>I extrapolated data using by using the previous data point if the ToF sensors is not currently ready with a reading. (Note: This is the loop I used to measure the decoupled PID loop frequency.)</p>
+<p><img alt="" src="../_images/prev_data_code.jpeg" /></p>
+</section>
+<section id="linear-interpolation">
+<h4>Linear Interpolation<a class="headerlink" href="#linear-interpolation" title="Link to this heading"></a></h4>
+<p>I implemented the linear interpolation equation below which uses the previous two datapoints to predict the next if the ToF sensor is not ready with a reading.
+<img alt="" src="../_images/interpolation_eq.png" />
+<img alt="" src="../_images/interpolate_code.jpeg" /></p>
+<p>The graph for the raw data and the extrapolated data is shown.
+<img alt="" src="images/Lab5/interpolate_graph.jpeg" /></p>
+</section>
+</section>
+<section id="wind-up-protection-for-integrator">
+<h3>Wind-Up Protection for Integrator<a class="headerlink" href="#wind-up-protection-for-integrator" title="Link to this heading"></a></h3>
+<p>The integrator term in my controller caused a wind-up issue. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target distance. This issue caused my car to drive directly into the cabinet as shown below.</p>
+<section id="no-wind-up-protection">
+<h4>No Wind-up Protection<a class="headerlink" href="#no-wind-up-protection" title="Link to this heading"></a></h4>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ITvxpkxNnqw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<section id="wind-up-protection">
+<h4>Wind-Up Protection<a class="headerlink" href="#wind-up-protection" title="Link to this heading"></a></h4>
+<p>To fix this issue, I implemented clamping in the code below using the logic shown in Professor Helbling’s slides. The accumulated error is reset to 0 when the controller is clamped, helping to prevent oversaturation.
+<img alt="" src="../_images/clamp_slide.jpg" /></p>
+<p><img alt="" src="../_images/clamp_code.jpg" /></p>
+<p>Two videos of my wind-up integrator protection code are shown (Kp=0.05 and Ki = 0.01).</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nPRK794NF8k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8rM_LcwEsAo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I heavily referenced Professor Helbling’s slides. I also referenced pages written by Nila, Mikayla, and Stephen. I discussed ideas with Sabian and Becky.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab4/" class="btn btn-neutral float-left" title="Lab 4: Motors and Open Loop Control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab6/" class="btn btn-neutral float-right" title="Lab 6: Orientation Control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
