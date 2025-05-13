@@ -8,19 +8,34 @@ In this lab, our objective was to program the robot to follow a predefined path 
 I used Arduino code from the previous labs and called my commands from Python to complete this lab. We only used four Arduino commands: LINEAR_PID, FORWARD, and START_ORIENTATION_PID. I did not do any localization
 
 
-
-
 ## Arduino Code
+
+### Open Loop Movement Commands
 ![](images/Lab12/forward_case.jpg)
-![](images/Lab12/linear_pid.jpg)
-![](images/Lab12/localize.jpg)
-![](images/Lab12/pause.jpg)
-![](images/Lab12/run_orient_pi.jpg)
-![](images/Lab12/start_orient_pid.jpg)
 ![](images/Lab12/turnleft_case.jpg)
 ![](images/Lab12/turnright_case.jpg)
 
+### PI Controlled Commands
+![](images/Lab12/linear_pid.jpg)
+![](images/Lab12/start_orient_pid.jpg)
+
+### Localization Commands
+
+[](images/Lab12/localize.jpg)
+![](images/Lab12/pause.jpg)
+![](images/Lab12/run_orient_pi.jpg)
+
 ## Python Code
+
+### Localization Observation Loop
+![](images/Lab12/observ_python.jpg)
+
+### Update Step
+![](images/Lab12/update_python.jpg)
+
+### Final Run Code
+![](images/Lab12/python_final_run_p1.jpg)
+![](images/Lab12/python_final_run_p2.jpg)
 
 
 ### Path Execution
