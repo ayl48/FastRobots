@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 6: Orientation Control &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 7: Kalman Filter" href="../Lab7/" />
+    <link rel="prev" title="Lab 5: Linear PID Control and Linear Interpolation" href="../Lab5/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 6: Orientation Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prelab">Prelab</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pid-input-signal">PID Input Signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bluetooth-commands">Bluetooth Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pi-discussion-and-implementation">PI Discussion and Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#programming-implementation-notes">Programming Implementation Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-tasks">Lab Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#orientation-control">Orientation Control</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#proportional-p-control">Proportional (P) Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proportional-integral-pi-control">Proportional Integral (PI) Control</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#derivative-term-discussion">Derivative Term Discussion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sampling-frequency-and-performance-of-dmp">Sampling Frequency and Performance of DMP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wind-up-protection-for-integrator">Wind-Up Protection for Integrator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#no-wind-up-protection">No Wind-up Protection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wind-up-protection">Wind-Up Protection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 6: Orientation Control</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab6.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-6-orientation-control">
+<h1>Lab 6: Orientation Control<a class="headerlink" href="#lab-6-orientation-control" title="Link to this heading"></a></h1>
+<section id="prelab">
+<h2>Prelab<a class="headerlink" href="#prelab" title="Link to this heading"></a></h2>
+<p>In Lab 6, I built upon my Lab 5 code by using case statements for PID control and adjusting the Kp and Ki values.</p>
+<section id="pid-input-signal">
+<h3>PID Input Signal<a class="headerlink" href="#pid-input-signal" title="Link to this heading"></a></h3>
+<p>Remembering how much drift affected my yaw measurement in Lab 2, I decided to test out the Digital Motion Processor (DMP) in the InvenSense ICM-20948 sensor instead. Here is a video of the DMP example code running with the visualizer.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VRjVanpF9zI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+---
+The gyroscope data alone introduced drift over time due to the accumulation of small errors, which led to increasing orientation inaccuracies. While bias correction and calibration could help, the drift was still nontrivial. I switched to the DMP because it mitigates this by fusing data from the gyroscope, accelerometer, and magnetometer, reducing drift and providing more stable yaw measurements. This sensor fusion improves orientation tracking and helps stabilize the yaw value when the robot is stationary. However, enabling the DMP requires extra memory on the microcontroller and modifications to the SparkFun ICM-20948 Arduino library.
+<p>After making the decision to to switch from using the gyroscope data alone to using the DMP, I organized the DMP code into a separate header and CPP file like how I did with the ToF sensor code in Lab 5.</p>
+<p>DMP.h is shown below.
+<img alt="" src="../_images/DMP_h.jpeg" /></p>
+<p>DMP.cpp is shown below.
+<img alt="" src="../_images/DMP_cpp1.jpeg" />
+<img alt="" src="../_images/DMP_cpp2.jpeg" /></p>
+<p>The <a class="reference external" href="https://en.wikipedia.org/w/index.php?title=Conversion_between_quaternions_and_Euler_angles&amp;amp;section=8#Source_code_2">quaternion</a> data is taken from the DMP and converted to Euler angles. In my DMP code, I calculate only yaw to maximize performance and minimize computational overhead since roll and pitch are not needed for this lab.</p>
+<p>The DMP sends its data through a FIFO queue before I2C transmission. The queue must be read and emptied regularly to get the latest orientation readings. In order to prevent the FIFO from filling up due to slow reads, I reduce the DMP output rate to ~10Hz and avoid unnecessary delays, ensuring continuous polling unless the queue is empty.</p>
+<p>DMP Output Rate Reduction:
+<img alt="" src="../_images/dmp_rate.jpeg" /></p>
+<p>Delaying Only When Queue is Empty:
+<img alt="" src="../_images/dmp_delay.jpeg" /></p>
+</section>
+<section id="bluetooth-commands">
+<h3>Bluetooth Commands<a class="headerlink" href="#bluetooth-commands" title="Link to this heading"></a></h3>
+<p>The Bluetooth commands I added for orientation PID are displayed. Like in Lab 5, they allow me to set parameters and control the start/stop of my orientation PID code from my computer.</p>
+<p>I am reusing the <strong>SET_PID_PARAM</strong> command which sets PI parameters (Kp and Ki). This command can change the parameter values while my controller is running.</p>
+<p>Arduino side:
+<img alt="" src="../_images/set_pid_param.jpeg" /></p>
+<p>Python side:
+<img alt="" src="../_images/SET_PID_py.jpeg" /></p>
+<p>I am also reusing the <strong>SET_CONSTRAINT</strong> command which allows me to choose PWM value limits to cap the turn speed. I can also set the flag for clamping here, which enables or disables wind-up protection for the integral term.</p>
+<p>Arduino side:
+<img alt="" src="../_images/SET_CONSTRAINT.jpeg" /></p>
+<p>Python side:
+<img alt="" src="../_images/SET_CON_py.jpeg" /></p>
+<p>The <strong>START_ORIENT_PID</strong> command allows me to set the target angle () and PID runtime, then executes PI control for the specified duration. After executing the control, it sends timestamped data, including angles, PWM values, P terms, and I terms, to the computer for plotting. The PI control implementation will be covered in the next section.</p>
+<p>I retained the hard stop from before in the main loop as a safety measure in case the Bluetooth connection fails.
+<img alt="" src="../_images/hard_stop.jpg" /></p>
+</section>
+<section id="pi-discussion-and-implementation">
+<h3>PI Discussion and Implementation<a class="headerlink" href="#pi-discussion-and-implementation" title="Link to this heading"></a></h3>
+<p>The following explanation was discussed in my Lab 5 webpage but is repeated here for context. “The PID equation and block digram from Professor Helbling’s slides are shown.
+<img alt="" src="../_images/PID_equation.jpeg" />
+<img alt="" src="../_images/PID_diagram.jpeg" /></p>
+<p>In essence, the PID control equation combines three components to adjust a system’s behavior. The Proportional term responds to the current error, the Integral term accounts for past errors to eliminate steady-state error, and the Derivative term predicts future errors based on the rate of change. Together, these components work to minimize error and improve system stability and accuracy.”</p>
+<hr class="docutils" />
+<p>Like lab 5, I implemented only PI control because, through experimentation, I found it sufficient to make the robot turned to the target angle. The P term provided effective control, while the I term helped with fine-tuning the small and persistent errors. Since the robot is turning so slowly, and I’m lightly kicking the robot as opposed to punting it across the room, there are no substantial fluctuations or fast changes in the system that would necessitate the D term.</p>
+<p>I implemented my <strong>START_ORIENT_PID</strong> code very similarly to my linear PID code, I use a while loop to implement PI control for the desired duration. I compute the time step (dt) for the integral control and then update the PI values using the orient_pid function. At the end of the loop, I manage the turn direction based on the sign of the adjusted PWM value from the PI calculation.</p>
+<p>Arduino side:
+<img alt="" src="../_images/start_orient_ard1.jpg" />
+<img alt="" src="../_images/start_orient_ard2.jpg" /></p>
+<p>Python side:
+<img alt="" src="../_images/start_orient_pid.jpeg" /></p>
+<p>In my <strong>orient_pid</strong> function located in the orient.cpp file, I implement PI according to the equation.</p>
+<p>orient.h:
+<img alt="" src="../_images/orient_h.jpeg" /></p>
+<p>orient.cpp:
+<img alt="" src="../_images/orient_cpp.jpeg" /></p>
+<p>I also include my clamping code for wind-up protection in my orient_pid function. The clamp flag, activated in <strong>SET_CONSTRAINT</strong>, controls the conditional that encompasses the clamping code.</p>
+</section>
+<section id="programming-implementation-notes">
+<h3>Programming Implementation Notes<a class="headerlink" href="#programming-implementation-notes" title="Link to this heading"></a></h3>
+<p>The orientation cannot currently be adjusted while the robot is running or moving forward/backward, but I may add this functionality in a future lab through a new command to allow real-time modifications. This command can be easily implemented by simply modifying the current target_angle variable in the code. This variable is passed as an argument when the orient_pid function is called. Real-time  adjustments are useful for stunts, enabling dynamic orientation control during complex movements like flips or sharp turns, helping the robot reach the desired angle at the right moment.</p>
+</section>
+</section>
+<section id="lab-tasks">
+<h2>Lab Tasks<a class="headerlink" href="#lab-tasks" title="Link to this heading"></a></h2>
+<section id="orientation-control">
+<h3>Orientation Control<a class="headerlink" href="#orientation-control" title="Link to this heading"></a></h3>
+<p>In all my testing, I set 50 degrees as my setpoint or target angle.</p>
+<section id="proportional-p-control">
+<h4>Proportional (P) Control<a class="headerlink" href="#proportional-p-control" title="Link to this heading"></a></h4>
+<p>First, I implemented proportional control. Somehow I got lucky and guessed a good Kp value on the first try.</p>
+<p>Kp = 0.0001.</p>
+<p><img alt="" src="../_images/p_angle.jpeg" />
+<img alt="" src="../_images/p_pwm1.jpeg" />
+<img alt="" src="../_images/p_pterm1.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nsWOYTPYxV4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="proportional-integral-pi-control">
+<h4>Proportional Integral (PI) Control<a class="headerlink" href="#proportional-integral-pi-control" title="Link to this heading"></a></h4>
+<p>After determining Kp, I initially attempted to follow the heuristic procedure from the slides by increasing Ki until overshoot occurred and then gradually decreasing it until the overshoot disappeared. However, I ultimately had to rely on trial and error to find a suitable combination of Kp and Ki. My main focus was on the car’s ability to return to the setpoint, using that as the primary indicator of effective tuning.</p>
+<p>Kp = 0.5 and Ki = 0.0005</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rpV5EgI7W3g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+___
+<p><img alt="" src="../_images/pi_noclamp_angle.jpeg" />
+<img alt="" src="../_images/pi_noclamp_pwm1.jpeg" />
+<img alt="" src="../_images/pi_noclamp_pterm1.jpeg" />
+<img alt="" src="../_images/pi_noclamp_iterm1.jpeg" /></p>
+</section>
+</section>
+<section id="derivative-term-discussion">
+<h3>Derivative Term Discussion<a class="headerlink" href="#derivative-term-discussion" title="Link to this heading"></a></h3>
+<p>Although, I did not use a derivate term in my controller, I will address the discussion points written in the handout on a high level. Taking the derivative of an integrated signal is valid because it reflects how the accumulated error changes over time, allowing for a response based on past behavior. However, this can cause derivative kick when the  changes suddenly, leading to large spikes in the derivative term. To mitigate this, it’s better to apply the derivative to the error directly and use a low-pass filter to smooth out high-frequency noise.</p>
+</section>
+<section id="sampling-frequency-and-performance-of-dmp">
+<h3>Sampling Frequency and Performance of DMP<a class="headerlink" href="#sampling-frequency-and-performance-of-dmp" title="Link to this heading"></a></h3>
+<p>Using the same methods from previous labs, I calculated the frequency at which the DMP could return new data: ~45 Hz.
+<img alt="" src="../_images/DMP_freq.jpeg" /></p>
+<p>I conducted a test to evaluate the effect of motor noise on the DMP data. By placing the car on the ground, I recorded angle measurements with the motors both on and off. The graph below shows that the DMP is highly resistant to noise, as the angle measurements differ by only about 1 degree between the two conditions.
+<img alt="" src="../_images/noise_test.jpeg" /></p>
+</section>
+<section id="wind-up-protection-for-integrator">
+<h3>Wind-Up Protection for Integrator<a class="headerlink" href="#wind-up-protection-for-integrator" title="Link to this heading"></a></h3>
+<section id="no-wind-up-protection">
+<h4>No Wind-up Protection<a class="headerlink" href="#no-wind-up-protection" title="Link to this heading"></a></h4>
+<p>The integrator term in my controller caused a wind-up issue as expected. The accumulated error increased rapidly and could not shrink fast enough as the robot approached the target angle. This issue caused my car to spin in circles. Surprisingly, my car still ended up really close to the 50 degree setpoint in the end.</p>
+<p><img alt="" src="../_images/pi_noclamp2_angle.jpeg" />
+<img alt="" src="../_images/pi_noclamp2_pwm.jpeg" />
+<img alt="" src="../_images/pi_noclamp2_pterm.jpeg" />
+<img alt="" src="../_images/pi_noclamp2_iterm.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7Q-QikCo2gM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+_____
+</section>
+<section id="wind-up-protection">
+<h4>Wind-Up Protection<a class="headerlink" href="#wind-up-protection" title="Link to this heading"></a></h4>
+<p>Like lab 5, I implemented clamping in the code below using the logic shown in Professor Helbling’s slides to fix the wind-up issue. The accumulated error is reset to 0 when the controller is clamped, helping to prevent oversaturation.
+<img alt="" src="../_images/clamp_slide.jpg" /></p>
+<p><img alt="" src="../_images/clamp_code.jpg" /></p>
+<p><img alt="" src="../_images/pi_clamp_angle.jpeg" />
+<img alt="" src="../_images/pi_clamp_pwm.jpeg" />
+<img alt="" src="../_images/pi_clamp_pterm.jpeg" />
+<img alt="" src="../_images/pi_clamp_iterm.jpeg" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kqI4PpA5Q6U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I heavily referenced Professor Helbling’s slides. I also referenced my own lab 5 page. I discussed ideas with Becky.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab5/" class="btn btn-neutral float-left" title="Lab 5: Linear PID Control and Linear Interpolation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab7/" class="btn btn-neutral float-right" title="Lab 7: Kalman Filter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

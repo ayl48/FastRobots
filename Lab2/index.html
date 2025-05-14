@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 2: IMU &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 3: Time of Flight Sensors" href="../Lab3/" />
+    <link rel="prev" title="Lab 1B: Bluetooth" href="../Lab1B/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 2: IMU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imu-setup">IMU Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accelerometer">Accelerometer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#roll-and-pitch-outputs">Roll and Pitch Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#still-imu-roll-and-pitch-data">Still IMU Roll and Pitch Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#noisy-imu-roll-and-pitch">Noisy IMU Roll and Pitch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pitch-data">Pitch Data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#roll-data">Roll Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#effect-of-lowpass-filter">Effect of Lowpass Filter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#still-imu">Still IMU</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#noisy-imu">Noisy IMU</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gyroscope">Gyroscope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sampling-data">Sampling Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imu-data-array">IMU Data Array</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rc-car-stunt">RC Car Stunt</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab7/">Lab 7: Kalman Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 2: IMU</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab2.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-2-imu">
+<h1>Lab 2: IMU<a class="headerlink" href="#lab-2-imu" title="Link to this heading"></a></h1>
+<section id="imu-setup">
+<h2>IMU Setup<a class="headerlink" href="#imu-setup" title="Link to this heading"></a></h2>
+<p>Connect the SparkFun 9DOF IMU Breakout to the Artemis nano board using a Qwicc connector.
+<img alt="" src="../_images/IMU_connection.jpeg" /></p>
+<p>Running the basic example from the SparkFun_ICM-20948 library, the Artemis successfully retrieves readings from the accelerometer, magnetometer, and gyroscope, reflecting changes as I move the IMU.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dr53VXYPOV8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>In the example, AD0_VAL refers to the Address 0 bit that sets the sensor’s I2C address. By default, when the ADR jumper is open, AD0_VAL is set to 1, giving the ICM an address of 0x69. When the ADR jumper is closed, AD0 is grounded, setting its value to 0 and changing the ICM’s address to 0x68, so AD0_VAL should be updated in the code.</p>
+<p>Working off provided IMU code, I make the board blink three times on startup to indicate that the IMU is running.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nsbZK_xvh08" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<section id="accelerometer">
+<h2>Accelerometer<a class="headerlink" href="#accelerometer" title="Link to this heading"></a></h2>
+<section id="roll-and-pitch-outputs">
+<h3>Roll and Pitch Outputs<a class="headerlink" href="#roll-and-pitch-outputs" title="Link to this heading"></a></h3>
+<p>The pitch and roll outputs of the accelerometer at {-90, 0, 90} are shown.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T1_F63LQtd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>Here are the pitch and roll outputs when the accelerometer is flat on the table.
+<img alt="Accelerometer flat" src="../_images/accel_data.jpeg" /></p>
+<p>The accelerometer is accurate within a few degrees. I used a box and table to position the IMU, but filming and holding it in place was challenging. Nevertheless, the output was accurate within a few degrees, so a two-point calibration wasn’t necessary. However, I tried it for experience, using {0, 0, 0} as the other reference point.</p>
+<p>To analyze the motion characteristics, I collected roll and pitch values from the accelerometer. I used the equations below to calculate them from the accelerometer’s readings along its three axes.</p>
+<p><img alt="Roll and Pitch Equations" src="../_images/a_equations.jpeg" /></p>
+<p>Since the accelerometer is susceptible to noise, I analyzed the roll and pitch noise in both the time and frequency domains. To examine its frequency spectrum, I applied a Fourier transform to the time-domain data using the code below.</p>
+<p><img alt="FFT Code" src="../_images/FFT_code.jpeg" /></p>
+</section>
+<section id="still-imu-roll-and-pitch-data">
+<h3>Still IMU Roll and Pitch Data<a class="headerlink" href="#still-imu-roll-and-pitch-data" title="Link to this heading"></a></h3>
+<p>I placed the IMU flat on the table to collect the following noise data. Looking at the graphs below, a cutoff frequency around 12-15 Hz is reasonable.</p>
+<p><img alt="Pitch Time" src="../_images/pitcha_time_still.jpeg" />
+<img alt="Pitch Freq" src="../_images/pitcha_freq_still.jpeg" /></p>
+<p><img alt="Roll Time" src="../_images/rolla_time_still.jpeg" />
+<img alt="Roll Freq" src="../_images/rolla_freq_still.jpeg" /></p>
+<section id="noisy-imu-roll-and-pitch">
+<h4>Noisy IMU Roll and Pitch<a class="headerlink" href="#noisy-imu-roll-and-pitch" title="Link to this heading"></a></h4>
+<p>I placed the IMU on a notepad and gently bounced it on the table to collect the following data.</p>
+</section>
+<section id="pitch-data">
+<h4>Pitch Data<a class="headerlink" href="#pitch-data" title="Link to this heading"></a></h4>
+<p><img alt="Pitch Time" src="../_images/pitcha_time_noise.jpeg" />
+<img alt="Pitch Freq" src="../_images/pitcha_freq_noise.jpeg" /></p>
+</section>
+</section>
+<section id="roll-data">
+<h3>Roll Data<a class="headerlink" href="#roll-data" title="Link to this heading"></a></h3>
+<p><img alt="Roll Time" src="../_images/rolla_time_noise.jpeg" />
+<img alt="Roll Freq" src="../_images/rolla_freq_noise.jpeg" /></p>
+</section>
+<section id="effect-of-lowpass-filter">
+<h3>Effect of Lowpass Filter<a class="headerlink" href="#effect-of-lowpass-filter" title="Link to this heading"></a></h3>
+<p>To filter the data, I used a low pass filter and implemented with the equations shown. The lowpass filter was extremely effective.
+<img alt="LPF" src="../_images/LPF.jpeg" /></p>
+<section id="still-imu">
+<h4>Still IMU<a class="headerlink" href="#still-imu" title="Link to this heading"></a></h4>
+<p><img alt="Roll Time" src="../_images/rolla_timeoverlay_still.jpeg" />
+<img alt="Roll Freq" src="../_images/rolla_freqoverlay_still.jpeg" /></p>
+<p><img alt="Pitch Time" src="../_images/pitcha_timeoverlay_still.jpeg" />
+<img alt="Pitch Freq" src="../_images/pitcha_freqoverlay_still.jpeg" /></p>
+</section>
+<section id="noisy-imu">
+<h4>Noisy IMU<a class="headerlink" href="#noisy-imu" title="Link to this heading"></a></h4>
+<p><img alt="Roll Time" src="../_images/rolla_timeoverlay_noise.jpeg" />
+<img alt="Roll Freq" src="../_images/rolla_freqoverlay_noise.jpeg" /></p>
+<p><img alt="Pitch Time" src="../_images/pitcha_timeoverlay_noise.jpeg" />
+<img alt="Pitch Freq" src="../_images/pitcha_freqoverlay_noise.jpeg" /></p>
+</section>
+</section>
+</section>
+<section id="gyroscope">
+<h2>Gyroscope<a class="headerlink" href="#gyroscope" title="Link to this heading"></a></h2>
+<p>Using the following equations, I can calculate roll, pitch, and yaw from the gyroscope.</p>
+<p><img alt="Gyro Basic" src="../_images/gyro_raw_code.jpeg" /></p>
+<p>Below are the data outputs from the gyroscope as it moves.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jgirFcWsy7Y" frameborder="0" allowfullscreen></iframe>
+<p>The gyroscope data appears to be less noisy than the accelerometer data and shows a consistent offset across all values. While the data may not be entirely accurate, it remains stable, making it more suitable for detecting changes over time. It remains susceptible to drift, which can cause gradual and cumulative inaccuracies unless corrected.</p>
+<p><img alt="Roll Comparison" src="../_images/roll_comparison.jpeg" />
+<img alt="Pitch Comparison" src="../_images/pitch_comparison.jpeg" /></p>
+<p>Since gyroscopes are stable for short-term rotations but prone to drift, they can be paired with accelerometers that provide long-term stability but are affected by noise, so a complementary filter combines both for accurate and stable orientation tracking.</p>
+<p>Complimentary Filter Equation:
+<img alt="Complimentary Filter Equation" src="../_images/complementary.jpeg" /></p>
+<p>I determined the optimal alpha value through trial and error. The ideal alpha value will vary for each sensor, as differences in manufacturing can affect sensor characteristics.</p>
+<p><img alt="Raw Plot" src="../_images/raw_gyro_plot.jpeg" /></p>
+<p><img alt="Complimentary Filter Plot" src="../_images/complementary_plot.jpeg" /></p>
+<p><img alt="Gyro Plot Overlay" src="../_images/gyro_overlaid_plot.jpeg" /></p>
+</section>
+<section id="sampling-data">
+<h2>Sampling Data<a class="headerlink" href="#sampling-data" title="Link to this heading"></a></h2>
+<p>To sample data quickly and continuously, I added the following code in the main loop, reducing sampling time to match the sensor’s speed.</p>
+<p><img alt="Complimentary Filter Equation" src="../_images/main_loop.jpeg" /></p>
+<p>It is better to use separate arrays for accelerometer and gyroscope data, as it simplifies processing and parsing, especially when transmitting data. Floats are ideal for sensor readings due to their precision and smaller memory usage compared to doubles, while ints work well for non-decimal data like timestamps. Given the 384KB memory on the Artemis, you can store up to 96,000 samples or about 16 minutes of data at a 100Hz sampling rate, assuming no other significant memory usage. This setup ensures efficient storage and easy data handling.</p>
+<section id="imu-data-array">
+<h3>IMU Data Array<a class="headerlink" href="#imu-data-array" title="Link to this heading"></a></h3>
+<p>My Artemis board can capture and transmit via Bluetooth more than five seconds worth of data.</p>
+<p><img alt="IMU Data" src="../_images/timestamped_IMU.jpeg" />
+<img alt="Collection time" src="../_images/collection_time.jpeg" /></p>
+</section>
+</section>
+<section id="rc-car-stunt">
+<h2>RC Car Stunt<a class="headerlink" href="#rc-car-stunt" title="Link to this heading"></a></h2>
+<p>I experimented with the RC car to understand its movement. It tends to skid or slide when stopping and sometimes jerks forward. It also skids when moving forward before turning. Its tight turns are almost 90 degrees.</p>
+<p>2D movements (e.g. forward, backwards, turns, spins):</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UiRf5P_jSIE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>Flip:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Sz7C0u9L2Jk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab1B/" class="btn btn-neutral float-left" title="Lab 1B: Bluetooth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab3/" class="btn btn-neutral float-right" title="Lab 3: Time of Flight Sensors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

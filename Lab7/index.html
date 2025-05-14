@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 7: Kalman Filter &mdash; ECE 5160: Fast Robots  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/color.css?v=75bc5ffc" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Lab 8: Stunts" href="../Lab8/" />
+    <link rel="prev" title="Lab 6: Orientation Control" href="../Lab6/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            ECE 5160: Fast Robots
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../home/">About Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1A/">Lab 1A: Artemis Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab1B/">Lab 1B: Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab2/">Lab 2: IMU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab3/">Lab 3: Time of Flight Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab4/">Lab 4: Motors and Open Loop Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab5/">Lab 5: Linear PID Control and Linear Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab6/">Lab 6: Orientation Control</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab 7: Kalman Filter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#drag-and-momentum-estimation">Drag and Momentum Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kalman-filter-implementation-in-python-simulation">Kalman Filter Implementation in Python (Simulation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kalman-filter-implementation-on-the-robot">Kalman Filter Implementation on the Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab8/">Lab 8: Stunts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab9/">Lab 9: Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab10/">Lab 10: Grid Localization using Bayes Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab11/">Lab 11: Localization on the Real Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lab12/">Lab 12: Path Planning and Execution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">ECE 5160: Fast Robots</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lab 7: Kalman Filter</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Lab7.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lab-7-kalman-filter">
+<h1>Lab 7: Kalman Filter<a class="headerlink" href="#lab-7-kalman-filter" title="Link to this heading"></a></h1>
+<p>In this lab, I implemented a Kalman Filter in a python simulation and on my robot. A Kalman Filter is a method to estimate the robot’s location by combining predictions from a model with real sensor data. In this case, we’re using a state space model to predict the robot’s distance from the wall, then updating that prediction using the ToF sensor reading. The process has two steps: prediction and update. The equations for these steps are shown in the robot implementation section. The first part of the lab focuses on estimating drag and momentum using steady-state velocity data to determine values for the model in both the simulation and the robot implementation.</p>
+<section id="drag-and-momentum-estimation">
+<h2>Drag and Momentum Estimation<a class="headerlink" href="#drag-and-momentum-estimation" title="Link to this heading"></a></h2>
+<p>I use a step response to collect data for the drag and momentum estimation by initially setting the PWM to 0 and then applying a constant PWM value. I chose a PWM of 100, which is about 39% of the maximum PWM used in my linear PID lab, instead of the recommended 50-100% of the maximum u, because the robot moved too quickly at higher PWM values, making it difficult to collect a sufficient number of data points.</p>
+<p><img alt="" src="../_images/100pwm.jpeg" /></p>
+<p>The distance and velocity graphs are shown below. In the velocity graph, you can see that the velocity settles on a value of ~1700 mm/s at time ~2.12s. I estimate the 90% rise time to be ~1.91s. The speed at 90% rise time is ~1666 mm/s. This estimate is based on my fitted velocity graph, though the fit isn’t perfect and doesn’t accurately capture the settling at the end. I had difficulty adjusting the fitted curve so I have attached my best attempt.
+<img alt="" src="../_images/distance.jpeg" /></p>
+<p><img alt="" src="../_images/velocity.jpeg" /></p>
+<p><img alt="" src="../_images/fitted_velocity.jpeg" /></p>
+<p>The following equations can be used to calculate drag and momentum.
+<img alt="" src="../_images/drag_eq.png" /></p>
+<p>For ease of calculation, I converted my values to SI units before performing the calculations.
+<img alt="" src="../_images/calc.png" /></p>
+<p>The state space model uses the robot’s momentum and drag to form the A and B matrices with the two states being position and velocity. The A and B matrices are shown below. In this lab, the C matrix is set to [1 0], meaning we’re only measuring the robot’s position, not its velocity which is a simplification of what was described in lecture.</p>
+<p><img alt="" src="../_images/ABmatrix.png" /></p>
+</section>
+<section id="kalman-filter-implementation-in-python-simulation">
+<h2>Kalman Filter Implementation in Python (Simulation)<a class="headerlink" href="#kalman-filter-implementation-in-python-simulation" title="Link to this heading"></a></h2>
+<p><img alt="" src="../_images/kf_py.jpeg" />
+<img alt="" src="../_images/kf_py2.jpeg" /></p>
+<p>The estimated model parameters done using calculations is decently accurate, but does not follow the data too closely. Here, sigma1=sigma2=70 and sigma3=15.</p>
+<p><img alt="" src="../_images/model_est.jpeg" /></p>
+<p>Putting more trust in our model, the Kalman graph deviates from my measurements too much. Here, sigma1= sigma2=50 and sigma3=50.</p>
+<p><img alt="" src="../_images/kf_model_py.jpeg" /></p>
+<p>Putting more trust in our measurements, the Kalman graph matches the measurements almost exactly. Here, sigma1=sigma2=180 and sigma3=45.</p>
+<p><img alt="" src="../_images/kf_measure_py.jpeg" /></p>
+</section>
+<section id="kalman-filter-implementation-on-the-robot">
+<h2>Kalman Filter Implementation on the Robot<a class="headerlink" href="#kalman-filter-implementation-on-the-robot" title="Link to this heading"></a></h2>
+<p>I implemented the following Kalman Filter algorithm provided in Professor Helbling’s slides.
+<img alt="" src="../_images/kalman_math.jpeg" /></p>
+<p>I organized my Kalman filter code into kf.cpp and kf.h where I wrote a single function: kalman_filter. This function takes in mu (the control input, e.g., PWM), y (the latest sensor measurement), and an update flag, which is set to 0 or 1 in my KF command that will be discussed later. The function always predicts and prepares a measurement update every time it is called. However, it only updates the state estimate x and state uncertainty sig when the update flag is set to 1.</p>
+<p><img alt="" src="../_images/kf_ard1.jpeg" />
+<img alt="" src="../_images/kf_ard2.jpeg" /></p>
+<p>The KF command incorporates the Kalman filter into the Lab 5 linear extrapolation PID framework. I call the kalman_filter function with the update flag set to 1 when time-of-flight distance data is available, and set it to 0 when data is not yet ready. This ensures that the prediction step continues to run consistently, even when no new measurements are received. The prediction step will use the previous data if new measurements are unavailable. Updates are only applied once the robot receives its first valid distance measurement.</p>
+<p><img alt="" src="../_images/kf_case1.jpeg" />
+<img alt="" src="../_images/kf_case2.jpeg" /></p>
+<p><img alt="" src="../_images/kf_graph.png" />
+<img alt="" src="../_images/PWM.png" />
+<img alt="" src="../_images/P_val.png" />
+<img alt="" src="../_images/I_val.png" /></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tTEcGPCQIAs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>I referenced Professor Helbling’s slides, Wenyi’s page, and Mikayla’s page. I also discussed ideas with Becky, Sabian, and Akshati.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Lab6/" class="btn btn-neutral float-left" title="Lab 6: Orientation Control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Lab8/" class="btn btn-neutral float-right" title="Lab 8: Stunts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Annabel Lian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
