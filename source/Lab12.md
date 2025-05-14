@@ -1,27 +1,36 @@
 # Lab 12: Path Planning and Execution
-
-In this lab, our objective was to program the robot to follow a predefined path on the map, starting at coordinate (-4, -3) and ending at (0, 0), with stops and localization performed at each waypoint. Due to time constraints, we only collected localization data at the starred points and skipped the coordinate (5, -2), as it lay directly between the straight path from (5, -3) to (5, 3). While we didn’t use localization to guide the robot’s movement, we used it to verify the accuracy of our belief estimates with Bayes.
+In this lab, our objective was to program the robot to follow a predefined path on the map, starting at coordinate (-4, -3) and ending at (0, 0), with stops and localization performed at each waypoint. Due to time constraints, we only collected localization data at the starred points and skipped the coordinate (5, -2) when traversing our path, as it lay directly between the straight path from (5, -3) to (5, 3). While we didn’t use localization to guide the robot’s movement, we used it to verify the accuracy of our belief estimates with Bayes.
 
 ![](images/Lab12/labeled_path.jpg)
 
+
 ## Method
-I used Arduino code from the previous labs and called my commands from Python to complete this lab. We only used four Arduino commands: LINEAR_PID, FORWARD, and START_ORIENTATION_PID. I did not do any localization
+To execute the path shown above, we used open loop control for forward movement from coordinates (-4,-3) to (1,-1) and linear PI control for the rest of the path legs. We used orientation PI control for every turn. We used Arduino code from the previous labs and called my commands sequentially from Python to complete this lab. Our path execution method required only three Arduino commands: LINEAR_PID, FORWARD, and START_ORIENT_PID. (**Note:** I never implemented the D term so these commands should be named PI, but there are too many instances where these command names are used, so I never renamed them.) Although we collect data for localization using our LOCALIZATION command, we do not actually use it in our path execution.
 
 
 ## Arduino Code
 
-### Open Loop Movement Commands
-![](images/Lab12/forward_case.jpg)
-![](images/Lab12/turnleft_case.jpg)
-![](images/Lab12/turnright_case.jpg)
+### FORWARD Command
+The FORWARD command accepts a PWM value and duration as user inputs and moves the robot forward accordingly for the specified time at the given speed. The forward() function comes from my Lab 4 code.
 
-### PI Controlled Commands
+![](images/Lab12/forward_case.jpg)
+
+
+### LINEAR_PID Command
+The LINEAR_PID command takes in user inputs for Kp, Ki, the target distance (setpoint), and the run_time, then executes the linear PID control accordingly. The run_time variable determines how long the while loop continues to compute the PI output, and we adjust it based on what we consider appropriate for each leg. The linear_PID() function is reused from my Lab 5 code.
+
 ![](images/Lab12/linear_pid.jpg)
+
+
+### START_ORIENT_PID Command
+The START_ORIENT_PID command is structured the same way as my LINEAR_PID command except we take a target angle as our setpoint. The orient_PID() function is reused from my Lab 6 code. 
+
 ![](images/Lab12/start_orient_pid.jpg)
 
-### Localization Commands
 
-[](images/Lab12/localize.jpg)
+### LOCALIZATION Command
+
+![](images/Lab12/localize.jpg)
 ![](images/Lab12/pause.jpg)
 ![](images/Lab12/run_orient_pi.jpg)
 
@@ -35,6 +44,7 @@ I used Arduino code from the previous labs and called my commands from Python to
 
 ### Final Run Code
 ![](images/Lab12/python_final_run_p1.jpg)
+
 ![](images/Lab12/python_final_run_p2.jpg)
 
 
